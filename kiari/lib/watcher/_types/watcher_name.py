@@ -1,0 +1,1 @@
+type WatcherName = str

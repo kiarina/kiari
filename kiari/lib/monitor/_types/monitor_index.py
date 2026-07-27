@@ -1,0 +1,1 @@
+type MonitorIndex = int

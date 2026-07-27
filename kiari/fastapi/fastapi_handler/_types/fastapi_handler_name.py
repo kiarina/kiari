@@ -1,0 +1,1 @@
+type FastAPIHandlerName = str

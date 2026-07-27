@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#MISE description="Publish package to PyPI"
+#USAGE flag "-t --test" help="Publish to Test PyPI instead of PyPI"
+
+set -euo pipefail
+
+test_pypi="${usage_test:-false}"
+
+echo "📦 Publishing package..."
+
+# Publish command
+if [ "$test_pypi" = "true" ]; then
+    echo "🧪 Publishing to Test PyPI..."
+    uv publish --publish-url https://test.pypi.org/legacy/
+    echo "✅ Package published to Test PyPI successfully!"
+    echo "🔗 Check your package at: https://test.pypi.org/project/kiari/"
+else
+    echo "🚀 Publishing to PyPI..."
+    uv publish
+    echo "✅ Package published to PyPI successfully!"
+    echo "🔗 Check your package at: https://pypi.org/project/kiari/"
+fi

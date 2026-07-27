@@ -1,0 +1,28 @@
+from typing import Literal
+
+Action = Literal[
+    "instances",
+    "tabs",
+    "tab_open",
+    "tab_close",
+    "tab_select",
+    "tab_activate",
+    "snapshot",
+    "dialog_respond",
+    "click",
+    "hover",
+    "drag",
+    "upload_file",
+    "type",
+    "select_option",
+    "press_key",
+    "navigate",
+    "go_back",
+    "go_forward",
+    "wait",
+    "wait_for",
+    "download_file",
+    "record_video",
+    "screenshot",
+    "console_logs",
+]

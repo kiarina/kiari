@@ -1,0 +1,1 @@
+type StreamlitAuthenticatorSpecifier = str

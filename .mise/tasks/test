@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#MISE description="Run tests"
+#USAGE flag "-v --verbose" help="Verbose output"
+#USAGE flag "-c --coverage" help="Run with coverage"
+#USAGE flag "--costly" help="Run tests marked as costly"
+#USAGE flag "--path <path>" help="Test file or directory (default: tests/)"
+
+set -euo pipefail
+
+# Default values for optional flags
+verbose="${usage_verbose:-false}"
+coverage="${usage_coverage:-false}"
+costly="${usage_costly:-false}"
+path="${usage_path:-tests/}"
+
+echo "🧪 Running tests..."
+
+# Test command construction
+test_cmd=(uv run --group test pytest "$path")
+
+if [ "$verbose" = "true" ]; then
+    test_cmd+=(-v)
+fi
+
+if [ "$coverage" = "true" ]; then
+    echo "🔍 Running with coverage..."
+    test_cmd+=(--cov=kiari --cov-report=term --cov-report=xml)
+fi
+
+# Test execution
+if [ "$costly" = "true" ]; then
+    test_cmd+=(--run-costly -s)
+fi
+
+"${test_cmd[@]}"
+
+echo "✅ Tests passed!"

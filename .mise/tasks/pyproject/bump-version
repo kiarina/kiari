@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#MISE description="Bump version in pyproject.toml"
+#USAGE arg "<version>" help="New version (e.g. '1.0.0', '1.0.0-alpha.1')"
+
+set -euo pipefail
+
+new_version="$usage_version"
+
+# Validate version format (basic semver check)
+if ! [[ "$new_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?$ ]]; then
+    echo "❌ Invalid version format: $new_version"
+    echo "   Expected format: X.Y.Z or X.Y.Z-suffix (e.g., 1.0.0, 1.0.0-alpha.1)"
+    exit 1
+fi
+
+if [ ! -f "pyproject.toml" ]; then
+    echo "❌ pyproject.toml not found"
+    exit 1
+fi
+
+echo "🔄 Updating version to $new_version..."
+
+# Use sed to replace the version line
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS sed
+    sed -i '' "s/^version = \".*\"/version = \"$new_version\"/" pyproject.toml
+else
+    # Linux sed
+    sed -i "s/^version = \".*\"/version = \"$new_version\"/" pyproject.toml
+fi
+echo "  ✅ Version updated in pyproject.toml"
+
+echo ""
+echo "🔒 Updating uv.lock..."
+uv lock
+
+echo ""
+echo "📊 Summary:"
+echo "  🎯 New version: $new_version"
+echo ""
+echo "💡 Next steps:"
+echo "   1. Review changes: git diff pyproject.toml uv.lock"
+echo "   2. Update changelog: mise run changelog:bump-version $new_version"
+echo "   3. Test the changes: mise run ci"
+echo "   4. Commit and tag: git add . && git commit -m 'chore: bump version to $new_version' && git tag v$new_version"
+echo "   5. Push with tags: git push origin main --tags"
+
+echo ""
+echo "✅ Version update completed!"

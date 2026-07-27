@@ -1,0 +1,1 @@
+type StreamlitHandlerSpecifier = str

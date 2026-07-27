@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+#MISE description="Bump version in CHANGELOG.md"
+#USAGE arg "<version>" help="Version to add (e.g. '0.2.0')"
+
+set -euo pipefail
+
+version="$usage_version"
+
+# Validate version format (basic semver check)
+if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?$ ]]; then
+    echo "❌ Invalid version format: $version"
+    echo "   Expected format: X.Y.Z or X.Y.Z-suffix (e.g., 0.2.0, 1.0.0-alpha.1)"
+    exit 1
+fi
+
+changelog_file="CHANGELOG.md"
+
+if [ ! -f "$changelog_file" ]; then
+    echo "❌ CHANGELOG.md not found"
+    exit 1
+fi
+
+# Check if version entry already exists
+if grep -q "^## \[$version\]" "$changelog_file"; then
+    echo "⏭️  Version $version already exists in CHANGELOG.md"
+    exit 0
+fi
+
+# Check if Unreleased section exists
+if ! grep -q "^## \[Unreleased\]" "$changelog_file"; then
+    echo "❌ No Unreleased section found in CHANGELOG.md"
+    exit 1
+fi
+
+has_unreleased_changes() {
+    local changelog_file="$1"
+
+    awk '
+        /^## \[Unreleased\]/ { in_unreleased = 1; next }
+        in_unreleased && /^## \[/ { exit }
+        in_unreleased && NF && $0 !~ /^### / { found = 1 }
+        END { exit found ? 0 : 1 }
+    ' "$changelog_file"
+}
+
+if ! has_unreleased_changes "$changelog_file"; then
+    echo "❌ Unreleased section has no changes"
+    exit 1
+fi
+
+echo "📝 Updating CHANGELOG.md for version $version..."
+
+# Get current date in YYYY-MM-DD format
+current_date=$(date +%Y-%m-%d)
+
+# Create temporary file for the updated changelog
+temp_file=$(mktemp)
+
+# Process the changelog with awk
+awk -v version="$version" -v date="$current_date" '
+BEGIN {
+    in_unreleased = 0
+    unreleased_count = 0
+    found_unreleased = 0
+    processed = 0
+}
+
+# Found Unreleased section
+/^## \[Unreleased\]/ {
+    found_unreleased = 1
+    in_unreleased = 1
+    next
+}
+
+# Found next version section while in unreleased
+/^## \[/ && in_unreleased {
+    in_unreleased = 0
+    processed = 1
+
+    # Add new Unreleased section
+    print "## [Unreleased]"
+    print ""
+
+    print "## [" version "] - " date
+    for (i = 0; i < unreleased_count; i++) {
+        print unreleased_lines[i]
+    }
+
+    # Print current line (next version section)
+    print
+    next
+}
+
+# Collect content in unreleased section
+in_unreleased {
+    unreleased_lines[unreleased_count++] = $0
+    next
+}
+
+# Handle case where Unreleased is the last section
+END {
+    if (found_unreleased && !processed) {
+        # Add new Unreleased section
+        print "## [Unreleased]"
+        print ""
+
+        print "## [" version "] - " date
+        for (i = 0; i < unreleased_count; i++) {
+            print unreleased_lines[i]
+        }
+    }
+}
+
+# Print all other lines
+!in_unreleased && !/^## \[Unreleased\]/ {
+    print
+}
+' "$changelog_file" > "$temp_file"
+
+# Replace the original file
+if mv "$temp_file" "$changelog_file"; then
+    echo "✅ CHANGELOG.md updated successfully"
+else
+    echo "❌ Failed to update CHANGELOG.md"
+    rm -f "$temp_file"
+    exit 1
+fi
+
+echo ""
+echo "📊 Summary:"
+echo "  🎯 Version: $version"
+echo "  📅 Date: $current_date"
+echo ""
+echo "💡 Next steps:"
+echo "   1. Review changes: git diff CHANGELOG.md"
+echo "   2. Test the changes: mise run ci"
+echo "   3. Commit: git add CHANGELOG.md && git commit -m 'docs: update CHANGELOG for v$version'"
+
+echo ""
+echo "✅ Update completed!"

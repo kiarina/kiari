@@ -1,0 +1,1 @@
+type SlashCommandName = str

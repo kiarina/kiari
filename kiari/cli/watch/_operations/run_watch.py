@@ -1,6 +1,8 @@
 import asyncio
 import logging
 
+from kiarina.agi.agent import run_agent
+
 from kiari.cli import graceful_shutdown
 from kiari.core.profile import ProfileName, RunOptions
 from kiari.core.rich import console_registry
@@ -73,7 +75,7 @@ async def _worker(
 
         try:
             async with watch_handler.handle_event(watch_event) as session:
-                async for event in watch_handler.run_request(session):
+                async for event in run_agent(**session.as_run_agent_kwargs()):
                     await watch_handler.on_agent_event(session, event)
                     session.last_event = event
 

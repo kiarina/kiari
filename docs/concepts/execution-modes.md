@@ -187,9 +187,11 @@ Handler が所有しない責務は次のとおりです。
 
 この境界を保つことで、同じ Handler を別の入力 adapter から使い、同じ agent engine を複数のモードから利用できます。
 
-`BaseScheduleHandler.run_request()` と `BaseWatchHandler.run_request()` は既定で
-`kiarina.agi.agent.run_agent()` を呼ぶ。LLM agent を実行しない用途では、custom Handler が
-このメソッドを override し、同じ mode のスケジュール、Watcher、Session、終了処理を再利用できる。
+schedule / watch operation は、Handler が組み立てた Session を必ず
+`kiarina.agi.agent.run_agent()` へ渡す。workflow と tool の実行場所をローカル・外部サービスへ
+振り分ける実行戦略は、Handler ではなく kiarina の `Agent` template method
+（`_run_workflow()` / `_run_tool()`）で差し替える。Handler はモード固有の入力、時刻・キュー、
+Session、Event出力、終了処理に責務を限定する。
 
 ## Failure and Shutdown Semantics
 

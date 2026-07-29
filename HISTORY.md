@@ -1,9 +1,7 @@
 # HISTORY
 
-## 2026-07-29: schedule/watch Handlerの実行差し替えとPub/Sub後ACKを追加
+## 2026-07-29: Pub/Subの処理成功後ACKを追加
 
-- `BaseScheduleHandler.run_request()` / `BaseWatchHandler.run_request()` を追加し、既定のagent実行を
-  custom Handlerから差し替えられるようにした。非LLM処理も既存modeのSessionと終了処理を再利用できる
 - watch処理の成功後に`WatchEvent.acknowledge()`、失敗・キャンセル・queue timeout時に
   `WatchEvent.release()`を呼ぶライフサイクルを追加した
 - Pub/Sub watcherは受信直後のACKを廃止し、処理中のack deadlineを延長したうえで、成功時ACKまたは

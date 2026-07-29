@@ -4,7 +4,6 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from kiarina.agi.agent import run_agent
 from kiarina.agi.cost_recorder import cost_recorder_registry
 from kiarina.agi.event import Event
 from kiarina.agi.event_builder import build_event
@@ -159,10 +158,6 @@ class BaseScheduleHandler(ScheduleHandler):
                 )
 
         await self._on_agent_event(session, event)
-
-    async def run_request(self, session: ScheduleSession) -> AsyncIterator[Event]:
-        async for event in run_agent(**session.as_run_agent_kwargs()):
-            yield event
 
     # --------------------------------------------------
     # Template methods (Session)

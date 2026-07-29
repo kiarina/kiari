@@ -2,6 +2,8 @@ import asyncio
 import logging
 from contextlib import suppress
 
+from kiarina.agi.agent import run_agent
+
 from kiari.cli import graceful_shutdown
 from kiari.cli.schedule.schedule_handler import (
     ScheduleHandler,
@@ -41,7 +43,7 @@ async def run_schedule(profile_name: ProfileName, run_options: RunOptions) -> No
                 while not stop_event.is_set():
                     if await schedule_handler.handle_schedule(session):
                         async with schedule_handler.handle_request(session):
-                            async for event in schedule_handler.run_request(session):
+                            async for event in run_agent(**session.as_run_agent_kwargs()):
                                 await schedule_handler.on_agent_event(session, event)
                                 session.last_event = event
 

@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-07-29: schedule/watch Handlerの実行差し替えとPub/Sub後ACKを追加
+
+- `BaseScheduleHandler.run_request()` / `BaseWatchHandler.run_request()` を追加し、既定のagent実行を
+  custom Handlerから差し替えられるようにした。非LLM処理も既存modeのSessionと終了処理を再利用できる
+- watch処理の成功後に`WatchEvent.acknowledge()`、失敗・キャンセル・queue timeout時に
+  `WatchEvent.release()`を呼ぶライフサイクルを追加した
+- Pub/Sub watcherは受信直後のACKを廃止し、処理中のack deadlineを延長したうえで、成功時ACKまたは
+  失敗時の即時再配信を行うようにした
+
 ## 2026-07-27 依存パッケージを更新
 
 - `make upgrade` で依存を更新し、kiarina 2.19.0、Ruff 0.16.0、FastAPI 0.140.0、

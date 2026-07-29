@@ -1,3 +1,4 @@
+from collections.abc import AsyncIterator
 from contextlib import AbstractAsyncContextManager
 from typing import Protocol, runtime_checkable
 
@@ -34,6 +35,8 @@ class ScheduleHandler(Protocol):
         self,
         session: ScheduleSession,
     ) -> AbstractAsyncContextManager[None]: ...
+
+    def run_request(self, session: ScheduleSession) -> AsyncIterator[Event]: ...
 
     async def on_agent_event(
         self,

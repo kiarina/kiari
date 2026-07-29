@@ -2,10 +2,13 @@ import asyncio
 import re
 import signal
 from collections.abc import AsyncIterator
+from typing import ClassVar
 
 import pytest
+from kiarina.agi.event import Event
 
 from kiari.cli.watch._operations.run_watch import run_watch
+from kiari.cli.watch.watch_handler import BaseWatchHandler, WatchSession, watch_handler_registry
 from kiari.core.profile import RunOptions
 from kiari.lib.watcher import BaseWatcher, WatchEvent, watcher_registry
 
@@ -23,13 +26,25 @@ class ContinuousWatcher(BaseWatcher):
             await asyncio.sleep(0.1)
 
 
+class CustomWatchHandler(BaseWatchHandler):
+    calls: ClassVar[int] = 0
+
+    async def run_request(self, session: WatchSession) -> AsyncIterator[Event]:
+        self.__class__.calls += 1
+        if False:
+            yield session.history.events[-1]
+
+
 @pytest.fixture(autouse=True)
 def cleanup():
     watcher_registry.register("one_shot", OneShotWatcher)
     watcher_registry.register("continuous", ContinuousWatcher)
+    watch_handler_registry.register("custom", CustomWatchHandler)
+    CustomWatchHandler.calls = 0
     yield
     watcher_registry.unregister("one_shot")
     watcher_registry.unregister("continuous")
+    watch_handler_registry.unregister("custom")
 
 
 async def test_run_watch_requires_watcher() -> None:
@@ -51,6 +66,21 @@ async def test_run_watch() -> None:
             watch_max_concurrent=1,
         ),
     )
+
+
+async def test_run_watch_delegates_request_to_handler() -> None:
+    await run_watch(
+        "default",
+        RunOptions(
+            watchers=["one_shot"],
+            watch_handler="custom",
+            no_save=True,
+            watch_queue_size=1,
+            watch_max_concurrent=1,
+        ),
+    )
+
+    assert CustomWatchHandler.calls == 1
 
 
 async def test_graceful_shutdown() -> None:

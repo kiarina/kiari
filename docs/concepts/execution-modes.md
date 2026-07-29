@@ -187,6 +187,10 @@ Handler が所有しない責務は次のとおりです。
 
 この境界を保つことで、同じ Handler を別の入力 adapter から使い、同じ agent engine を複数のモードから利用できます。
 
+`BaseScheduleHandler.run_request()` と `BaseWatchHandler.run_request()` は既定で
+`kiarina.agi.agent.run_agent()` を呼ぶ。LLM agent を実行しない用途では、custom Handler が
+このメソッドを override し、同じ mode のスケジュール、Watcher、Session、終了処理を再利用できる。
+
 ## Failure and Shutdown Semantics
 
 - Handler context は例外を記録して mode 固有の error hook を呼び、batch/watch/console では基本的に上位へ再送出する。
@@ -194,6 +198,9 @@ Handler が所有しない責務は次のとおりです。
 - Streamlit の request error は画面へ表示し、別 agent と次の request は継続可能にする。
 - Session の終了処理と cost flush は `finally` で行う。
 - watch と schedule の長寿命 task は graceful shutdown の stop event を監視する。
+- watch mode は処理成功後に `WatchEvent.acknowledge()`、失敗・キャンセル・queue timeout時に
+  `WatchEvent.release()` を呼ぶ。通常のWatcherではno-opで、Pub/Sub watcherはACKまたは
+  ack deadline 0による再配信へ対応する。Pub/Sub messageはHandler処理前にはACKしない。
 - process 全体の subprocess は、mode operation 終了後に finalizer が片付ける。
 - Chrome Bridge の lease は `chrome` tool の action ごとに取得し、その action の終了時に解放する。managed server とユーザーの Chrome は終了しない。
 

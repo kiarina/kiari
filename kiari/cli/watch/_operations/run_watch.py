@@ -6,7 +6,7 @@ from kiarina.agi.agent import run_agent
 from kiari.cli import graceful_shutdown
 from kiari.core.profile import ProfileName, RunOptions
 from kiari.core.rich import console_registry
-from kiari.lib.watcher import Watcher, WatchEvent, watcher_registry
+from kiari.lib.watcher import DiscardWatchEvent, Watcher, WatchEvent, watcher_registry
 
 from ..watch_handler import WatchHandler, watch_handler_registry
 
@@ -82,6 +82,10 @@ async def _worker(
         except asyncio.CancelledError:
             await watch_event.release()
             raise
+
+        except DiscardWatchEvent as e:
+            logger.warning(f"Discarding permanently invalid watch event: {e}")
+            await watch_event.acknowledge()
 
         except Exception as e:
             logger.error(f"Watch event processing failed: {e}", exc_info=True)

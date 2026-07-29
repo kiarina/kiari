@@ -2,12 +2,14 @@ import asyncio
 import re
 import signal
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from unittest.mock import AsyncMock
 
 import pytest
 
-from kiari.cli.watch._operations.run_watch import run_watch
+from kiari.cli.watch._operations.run_watch import _worker, run_watch
 from kiari.core.profile import RunOptions
-from kiari.lib.watcher import BaseWatcher, WatchEvent, watcher_registry
+from kiari.lib.watcher import BaseWatcher, DiscardWatchEvent, WatchEvent, watcher_registry
 
 
 class OneShotWatcher(BaseWatcher):
@@ -51,6 +53,28 @@ async def test_run_watch() -> None:
             watch_max_concurrent=1,
         ),
     )
+
+
+async def test_permanently_invalid_event_is_acknowledged() -> None:
+    event = WatchEvent(watcher_name="one_shot", text="invalid")
+    acknowledge = AsyncMock()
+    release = AsyncMock()
+    event.set_acknowledgement_callbacks(acknowledge=acknowledge, release=release)
+
+    class DiscardingHandler:
+        @asynccontextmanager
+        async def handle_event(self, watch_event: WatchEvent):
+            raise DiscardWatchEvent("invalid contract")
+            yield  # pragma: no cover
+
+    queue: asyncio.Queue[WatchEvent | None] = asyncio.Queue()
+    await queue.put(event)
+    await queue.put(None)
+
+    await _worker(DiscardingHandler(), queue)  # type: ignore[arg-type]
+
+    acknowledge.assert_awaited_once()
+    release.assert_not_awaited()
 
 
 async def test_graceful_shutdown() -> None:

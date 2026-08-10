@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-08-10: Dependabot 更新とセキュリティ修正
+
+- Dependabot PR 10 件を取り込み、GitPython 3.1.58、pypdf 6.15.0、cryptography 50.0.0、
+  LangChain 1.3.9、GitHub Actions などへ更新した
+- 拡張した依存範囲を lockfile に反映し、mypy 2.3.0、puremagic 2.2.0、Rich 15.0.0 で
+  lint・通常テスト 539 件・package build が成功することを確認した
+- Pillow 12.3.0 は kiarina-agi-data-builder 2.19.0 の `pillow<12` 制約と競合するため、
+  上流制約の更新後に対応する残タスクとした
+
 ## 2026-08-10: schedule modeの公開APIと外部stop_event注入
 
 - `run_schedule`を`_operations/`から`_helpers/`へ移し、`kiari.cli.schedule`の公開APIとして

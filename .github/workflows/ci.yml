@@ -19,7 +19,7 @@ jobs:
             NO_COLOR: "1"
 
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
 
             - name: Install system dependencies
               run: |
@@ -68,7 +68,7 @@ jobs:
             NO_COLOR: "1"
 
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
 
             - name: Install system dependencies
               run: |

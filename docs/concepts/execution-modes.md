@@ -96,7 +96,10 @@ Watcher はサービス固有の入力を共通の `WatchEvent` へ正規化し�
 
 ## Schedule Mode
 
-入口は `kiari/cli/schedule/cli.py`、長寿命 loop は `kiari/cli/schedule/_operations/run_schedule.py` です。
+入口は `kiari/cli/schedule/cli.py`、長寿命 loop は `kiari/cli/schedule/_helpers/run_schedule.py` です。
+`run_schedule` は `kiari.cli.schedule` の公開 API として export されており、外部 runtime が
+schedule mode を組み込むときは公開面から import します。組み込み側は `stop_event` を注入して
+loop を外部から停止できます（SIGINT と同じ扱いで、実行中の request は完了してから停止します）。
 
 schedule は `--interval` または `--cron` のどちらか一方を必要とします。Handler は Scheduler、次回実行時刻、History、蓄積した watch Event を持つ 1 つの `ScheduleSession` を作ります。
 

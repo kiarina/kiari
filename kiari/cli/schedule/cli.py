@@ -9,7 +9,7 @@ from kiari.core.runtime import setup_runtime
 
 from ._constants.schedule_option_group import SCHEDULE_OPTION_GROUP
 from ._decorators.schedule_options import schedule_options
-from ._operations.run_schedule import run_schedule
+from ._helpers.run_schedule import run_schedule
 
 click.rich_click.OPTION_GROUPS["kiari schedule"] = [
     SCHEDULE_OPTION_GROUP,

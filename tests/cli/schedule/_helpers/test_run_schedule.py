@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 
 import pytest
 
-from kiari.cli.schedule._operations.run_schedule import run_schedule
+from kiari.cli.schedule import run_schedule
 from kiari.cli.schedule.scheduler import create_scheduler, parse_duration
 from kiari.core.profile import RunOptions
 from kiari.lib.watcher import BaseWatcher, WatchEvent, watcher_registry
@@ -94,6 +94,30 @@ async def test_graceful_shutdown() -> None:
         signal_handler(signal.SIGINT, None)
 
     await task
+
+
+async def test_external_stop_event() -> None:
+    stop_event = asyncio.Event()
+
+    task = asyncio.create_task(
+        run_schedule(
+            "default",
+            RunOptions(
+                interval="1h",
+                watchers=["continuous"],
+                chat_model="mock",
+                no_save=True,
+                skip_if_no_events=True,
+            ),
+            stop_event=stop_event,
+        )
+    )
+
+    await asyncio.sleep(0.2)
+
+    stop_event.set()
+
+    await asyncio.wait_for(task, timeout=5)
 
 
 async def test_force_shutdown() -> None:

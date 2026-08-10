@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Exposed `run_schedule` as the public API of `kiari.cli.schedule` (moved from
+  `_operations/` to `_helpers/`) so embedding runtimes can import it without touching
+  private paths.
+- Added optional `stop_event` injection to `run_schedule` and `graceful_shutdown` so an
+  embedding runtime can stop the schedule loop externally; the in-flight request completes
+  before the loop exits.
+
 ### Changed
 
 - Updated the Chrome tool to Chrome Bridge SDK 0.4.x, including browser-dialog page

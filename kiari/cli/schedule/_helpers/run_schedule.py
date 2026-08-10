@@ -16,7 +16,12 @@ from kiari.lib.watcher import Watcher, watcher_registry
 logger = logging.getLogger(__name__)
 
 
-async def run_schedule(profile_name: ProfileName, run_options: RunOptions) -> None:
+async def run_schedule(
+    profile_name: ProfileName,
+    run_options: RunOptions,
+    *,
+    stop_event: asyncio.Event | None = None,
+) -> None:
     schedule_handler = schedule_handler_registry.resolve(
         run_options.schedule_handler,
         profile_name=profile_name,
@@ -27,7 +32,7 @@ async def run_schedule(profile_name: ProfileName, run_options: RunOptions) -> No
 
     watcher_tasks: list[asyncio.Task[None]] = []
 
-    with graceful_shutdown() as stop_event:
+    with graceful_shutdown(stop_event) as stop_event:
         try:
             async with schedule_handler.handle_session(
                 interval=run_options.interval,

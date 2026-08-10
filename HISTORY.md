@@ -1,5 +1,13 @@
 # HISTORY
 
+## 2026-08-10: schedule modeの公開APIと外部stop_event注入
+
+- `run_schedule`を`_operations/`から`_helpers/`へ移し、`kiari.cli.schedule`の公開APIとして
+  exportした。外部runtime（Spirits GardenのBody常駐化）が私有パスへ直接依存していた状態を解消する
+- `run_schedule`と`graceful_shutdown`へ外部`stop_event`注入を追加した。SIGINTと同じイベントを
+  共有するため、外部停止でも実行中のrequestは完了してからloopを抜ける
+- テストは公開面からのimportへ切り替え、外部stop_eventでの停止テストを追加した
+
 ## 2026-07-29: Pub/Subの処理成功後ACKを追加
 
 - watch処理の成功後に`WatchEvent.acknowledge()`、失敗・キャンセル・queue timeout時に

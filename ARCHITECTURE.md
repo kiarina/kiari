@@ -274,7 +274,7 @@ Plugin は任意の Python コードを現在のプロセスへ import します
 | --- | --- | --- |
 | CLI option or argument | `kiari/cli/*/cli.py`, decorators | `RunOptions`, bootstrap message, tests |
 | Agent execution behavior shared by modes | `kiari/core/runtime/` | `kiarina.agi`, all Handler base classes |
-| One mode's lifecycle | `kiari/cli/<mode>/_operations/` | Handler contract, Session schema, implementation |
+| One mode's lifecycle | `kiari/cli/<mode>/_operations/`（schedule は公開 API のため `_helpers/run_schedule.py`） | Handler contract, Session schema, implementation |
 | New external event source | `kiari/lib/watcher/` | `kiari/impl/watcher_impl/`, watch and schedule |
 | New agent tool | `kiari/impl/tool_impl/` | `_register_tools()` or custom registry config |
 | New persistence backend | `kiari/lib/history_repository/` | `kiari/impl/history_repository_impl/`, history setup |

@@ -11,8 +11,8 @@ type SignalHandler = Callable[[int, FrameType | None], Any] | int | None
 
 
 @contextmanager
-def graceful_shutdown() -> Iterator[asyncio.Event]:
-    stop_event = asyncio.Event()
+def graceful_shutdown(stop_event: asyncio.Event | None = None) -> Iterator[asyncio.Event]:
+    stop_event = stop_event if stop_event is not None else asyncio.Event()
     previous_sigint_handler: SignalHandler = signal.getsignal(signal.SIGINT)
 
     def signal_handler(signum: int, frame: FrameType | None) -> None:

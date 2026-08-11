@@ -18,6 +18,7 @@ class HistoryRepositorySettings(BaseSettings):
     presets: dict[HistoryRepositoryName, ImportPath] = Field(
         default_factory=lambda: {
             "in_memory": "kiari.impl.history_repository_impl.in_memory:InMemoryHistoryRepository",
+            "gcs": "kiari.impl.history_repository_impl.gcs:create_gcs_history_repository",
             "local": "kiari.impl.history_repository_impl.local:create_local_history_repository",
             "null": "kiari.impl.history_repository_impl.null:NullHistoryRepository",
         }

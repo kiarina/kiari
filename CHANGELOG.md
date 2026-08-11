@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added a GCS `HistoryRepository` backed by `GCSAssetRepository`, with an
+  agent-scoped object URI template and cache-bypassing loads.
 - Exposed `run_schedule` as the public API of `kiari.cli.schedule` (moved from
   `_operations/` to `_helpers/`) so embedding runtimes can import it without touching
   private paths.

@@ -134,7 +134,7 @@ classDiagram
 | StreamlitAuthenticator | `kiari/streamlit/authenticator` | browser-session, OIDC |
 | Watcher | `kiari/lib/watcher` | file, Pub/Sub, RTDB, Slack |
 | Web | `kiari/lib/web` | mock, kiapi |
-| HistoryRepository | `kiari/lib/history_repository` | null, in-memory, local |
+| HistoryRepository | `kiari/lib/history_repository` | null, in-memory, local, GCS |
 | Finalizer | `kiari/core/finalizer` | null, subprocess |
 | ExtensionCommand | `kiari/cli/ext/extension_command` | config/plugin から追加 |
 | Tool | `kiarina.agi.tool` | kiari が subprocess、GUI、file tools などを preset 登録 |

@@ -98,3 +98,11 @@
 - fastapi / uvicorn / streamlit は未実装 CLI スタブ用に維持。streamlit-aggrid は削除
 - docs sync playbook 実施済み(overview.md の Documented Versions を 2.16 系に更新。2.15/2.16 の変更は文書本文に影響なし)
 - どこからも参照されていなかった tests/data/python/mcp_server_math.py を削除(依存 `mcp` は langchain-mcp-adapters 削除で消えた)
+# 2026-08-12 HistoryRepositoryのGCS / Firebase Storage境界を分離
+
+- GCS HistoryRepositoryをAssetRepository経由からGoogle Cloud Storage clientの直接利用へ変更し、
+  agentのdata / cache asset権限からHistory制御状態を分離した
+- Firebase ID tokenと更新可能なtoken providerに対応するFirebase Storage HistoryRepositoryを
+  `impl/history_repository_impl/firebase_storage/`へ追加した
+- GCS / Firebase StorageともRunContextからprovider固有のobject nameを解決し、History JSONを
+  round-tripするcontract testを追加した

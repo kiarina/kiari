@@ -1,51 +1,67 @@
-from pathlib import Path
-from typing import ClassVar, cast
+from typing import cast
 
-from kiarina.agi.asset_repository import AssetRepository, BaseAssetRepository
+import google.cloud.exceptions
+from google.cloud.storage import Client  # type: ignore
 from kiarina.agi.history import History
-from kiarina.utils.file import FileBlob
-from kiarina.utils.mime import MIMEBlob
 
 from kiari.impl.history_repository_impl.gcs import create_gcs_history_repository
 
 
-class MemoryAssetRepository(BaseAssetRepository):
-    objects: ClassVar[dict[str, bytes]] = {}
+class MemoryBlob:
+    def __init__(self, name: str, objects: dict[str, bytes]) -> None:
+        self.name = name
+        self.objects = objects
 
-    async def _get(self, uri: str) -> MIMEBlob | None:
-        raw_data = self.objects.get(uri)
-        if raw_data is None:
-            return None
-        return FileBlob(
-            Path("history.json"), mime_type="application/json", raw_data=raw_data
-        ).mime_blob
+    def download_as_bytes(self) -> bytes:
+        try:
+            return self.objects[self.name]
+        except KeyError as error:
+            raise google.cloud.exceptions.NotFound("missing") from error
 
-    async def _set(self, uri: str, mime_type: str, raw_data: bytes) -> None:
-        del mime_type
-        self.objects[uri] = raw_data
+    def upload_from_string(self, raw_data: bytes, *, content_type: str) -> None:
+        assert content_type == "application/json"
+        self.objects[self.name] = raw_data
 
-    async def _delete(self, uri: str) -> None:
-        self.objects.pop(uri, None)
+    def delete(self) -> None:
+        if self.name not in self.objects:
+            raise google.cloud.exceptions.NotFound("missing")
+        del self.objects[self.name]
 
 
-async def test_gcs_history_repository_uses_agent_scoped_object(monkeypatch, run_context) -> None:
-    asset_repository = MemoryAssetRepository()
-    monkeypatch.setattr(
-        "kiari.impl.history_repository_impl.gcs._models.gcs_history_repository."
-        "create_gcs_asset_repository",
-        lambda **_: cast(AssetRepository, asset_repository),
-    )
+class MemoryBucket:
+    def __init__(self, objects: dict[str, bytes]) -> None:
+        self.objects = objects
+
+    def blob(self, name: str) -> MemoryBlob:
+        return MemoryBlob(name, self.objects)
+
+
+class MemoryClient:
+    def __init__(self) -> None:
+        self.objects: dict[str, bytes] = {}
+        self.bucket_names: list[str] = []
+
+    def bucket(self, name: str) -> MemoryBucket:
+        self.bucket_names.append(name)
+        return MemoryBucket(self.objects)
+
+
+async def test_gcs_history_repository_uses_agent_scoped_object(run_context) -> None:
+    client = MemoryClient()
     repository = create_gcs_history_repository(
-        object_uri_template="gs://bucket/users/{user_id}/spirits/{agent_id}/stm.json"
+        bucket_name="bucket",
+        object_name_template="users/{user_id}/spirits/{agent_id}/stm.json",
     )
-    uri = f"gs://bucket/users/{run_context.user_id}/spirits/{run_context.agent_id}/stm.json"
-    MemoryAssetRepository.objects.clear()
+    repository._client = cast(Client, client)
+    object_name = f"users/{run_context.user_id}/spirits/{run_context.agent_id}/stm.json"
 
     assert await repository.load(run_context) is None
     await repository.save(History(metadata={"current_body_id": "body-1"}), run_context)
-    assert uri in MemoryAssetRepository.objects
+    assert object_name in client.objects
+    assert client.bucket_names == ["bucket", "bucket"]
     loaded = await repository.load(run_context)
     assert loaded is not None
     assert loaded.metadata["current_body_id"] == "body-1"
     await repository.delete(run_context)
-    assert uri not in MemoryAssetRepository.objects
+    assert object_name not in client.objects
+    await repository.delete(run_context)

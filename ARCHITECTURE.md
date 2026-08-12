@@ -115,7 +115,7 @@ CLI の入口と、各実行モードのアプリケーションフローを持�
 - Handler: batch、console、watch、schedule、FastAPI、Streamlit の標準実装
 - Watcher: file、Pub/Sub、Realtime Database、Slack
 - Web: mock、kiapi
-- HistoryRepository: null、in-memory、local
+- HistoryRepository: null、in-memory、local、GCS、Firebase Storage
 - Tool: subprocess、GUI、Web 検索・取得、画像・動画生成、各種ファイル表示・編集、作業ディレクトリ変更
 - Logger: chat、cost、tool
 - Finalizer: subprocess、null

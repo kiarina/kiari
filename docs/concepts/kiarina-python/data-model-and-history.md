@@ -268,3 +268,9 @@ ToolMessage 固有属性が必要な場合は model または builder へ明示�
 | prompt-time hydration and resize | `kiarina-agi-flow/.../section_impl/history/` |
 | agent mutation and transient handling | `kiarina-agi-runner/.../agent/` |
 | kiari persistence | `kiari/lib/history_repository/` and `kiari/impl/history_repository_impl/` |
+
+`AssetRepository`はagentが自律的に扱うdata / cache assetの権限境界であり、Historyの制御状態を
+保存するための下位storage adapterではない。backendはservice accountで直接GCSへ接続する
+`GCSHistoryRepository`、Firebase clientはID tokenでFirebase Storage REST APIへ接続する
+`FirebaseStorageHistoryRepository`を使う。両実装は同じobjectを共有できるが、AssetRepositoryの
+URI policyへHistory objectを追加しない。

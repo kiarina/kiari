@@ -9,10 +9,15 @@ class GCSHistoryRepositorySettings(BaseSettings):
         extra="ignore",
     )
 
-    object_uri_template: str = Field(
-        default="gs://invalid/{organization_id}/{user_id}/{agent_id}/history.json",
-        title="Object URI Template",
-        description="GCS object URI template used to store one History per agent.",
+    bucket_name: str = Field(
+        default="invalid",
+        title="Bucket Name",
+        description="GCS bucket containing History objects.",
+    )
+    object_name_template: str = Field(
+        default="{organization_id}/{user_id}/{agent_id}/history.json",
+        title="Object Name Template",
+        description="GCS object name template used to store one History per agent.",
     )
     google_auth_settings_key: str | None = Field(
         default=None,

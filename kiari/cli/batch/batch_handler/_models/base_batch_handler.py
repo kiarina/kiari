@@ -1,5 +1,5 @@
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from kiarina.agi.cost_recorder import cost_recorder_registry
@@ -42,7 +42,7 @@ class BaseBatchHandler(BatchHandler):
         return history_repository_registry.resolve(self.run_options.history_repository)
 
     @asynccontextmanager
-    async def handle_request(self, request: BatchRequest) -> AsyncIterator[BatchSession]:
+    async def handle_request(self, request: BatchRequest) -> AsyncGenerator[BatchSession, None]:
         session = await self._create_session(request)
 
         try:

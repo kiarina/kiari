@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from kiarina.agi.cost_recorder import cost_recorder_registry
@@ -50,7 +50,7 @@ class BaseConsoleHandler(ConsoleHandler):
         return history_repository_registry.resolve(self.run_options.history_repository)
 
     @asynccontextmanager
-    async def handle_session(self) -> AsyncIterator[ConsoleSession]:
+    async def handle_session(self) -> AsyncGenerator[ConsoleSession, None]:
         session = await self._create_session()
 
         try:
@@ -74,7 +74,7 @@ class BaseConsoleHandler(ConsoleHandler):
         self,
         session: ConsoleSession,
         request: ConsoleRequest,
-    ) -> AsyncIterator[None]:
+    ) -> AsyncGenerator[None, None]:
         await self._update_session(session, request)
 
         try:

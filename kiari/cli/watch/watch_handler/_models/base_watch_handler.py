@@ -1,5 +1,5 @@
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from kiarina.agi.cost_recorder import cost_recorder_registry
@@ -45,7 +45,7 @@ class BaseWatchHandler(WatchHandler):
     async def handle_event(
         self,
         watch_event: WatchEvent,
-    ) -> AsyncIterator[WatchSession]:
+    ) -> AsyncGenerator[WatchSession, None]:
         session = await self._create_session(watch_event)
 
         try:

@@ -1,5 +1,5 @@
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -105,7 +105,7 @@ class BaseFastAPIHandler(FastAPIHandler):
     async def handle_request(
         self,
         request: FastAPIRequest,
-    ) -> AsyncIterator[FastAPISession]:
+    ) -> AsyncGenerator[FastAPISession, None]:
         session = await self._create_session(request)
 
         try:

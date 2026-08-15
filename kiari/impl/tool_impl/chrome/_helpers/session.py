@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from chrome_bridge_sdk import (  # type: ignore[import-untyped]
@@ -11,7 +11,7 @@ from kiari.lib.chrome import create_chrome_bridge, settings_manager
 
 
 @asynccontextmanager
-async def chrome_session() -> AsyncIterator[ChromeBridgeSession]:
+async def chrome_session() -> AsyncGenerator[ChromeBridgeSession, None]:
     try:
         bridge = create_chrome_bridge()
         async with bridge.session(

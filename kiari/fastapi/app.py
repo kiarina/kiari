@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager, suppress
 from types import TracebackType
 
@@ -22,7 +22,7 @@ def create_app(startup_options: FastAPIStartupOptions | None = None) -> FastAPI:
         configure(app_author="kiarina", app_name="kiari")
 
     @asynccontextmanager
-    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         await setup_runtime(
             startup_options.profile_name,
             startup_options.run_options,

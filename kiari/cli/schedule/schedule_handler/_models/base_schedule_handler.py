@@ -1,5 +1,5 @@
 import logging
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -58,7 +58,7 @@ class BaseScheduleHandler(ScheduleHandler):
         self,
         interval: str | None,
         cron: str | None,
-    ) -> AsyncIterator[ScheduleSession]:
+    ) -> AsyncGenerator[ScheduleSession, None]:
         now = self._now()
         scheduler = create_scheduler(
             interval=interval,
@@ -121,7 +121,7 @@ class BaseScheduleHandler(ScheduleHandler):
     async def handle_request(
         self,
         session: ScheduleSession,
-    ) -> AsyncIterator[None]:
+    ) -> AsyncGenerator[None, None]:
         error: Exception | None = None
         watch_events = list(session.watch_events)
 

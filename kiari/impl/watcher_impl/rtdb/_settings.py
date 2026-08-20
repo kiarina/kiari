@@ -11,7 +11,6 @@ class RTDBWatcherSettings(BaseSettings):
     firebase_settings_key: SettingsKey | None = None
     database_url: str = ""
     path: str = "/"
-    token_data_file_path: str = "./token_data.json"
 
 
 settings_manager = SettingsManager(RTDBWatcherSettings)

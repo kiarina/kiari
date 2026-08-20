@@ -2,13 +2,12 @@ import asyncio
 import logging
 from collections.abc import AsyncIterator
 
-from kiarina.lib.firebase import TokenManager, settings_manager as firebase_auth_settings_manager
+from kiarina.lib.firebase import token_manager_registry
 from kiarina.lib.firebase_rtdb import watch_data
 
 from kiari.lib.watcher import BaseWatcher
 
 from .._schemas.rtdb_watch_event import RTDBWatchEvent
-from .._services.file_token_cache import FileTokenCache
 from .._settings import RTDBWatcherSettings
 
 logger = logging.getLogger(__name__)
@@ -20,14 +19,7 @@ class RTDBWatcher(BaseWatcher):
         self.settings: RTDBWatcherSettings = settings
 
     async def watch(self, stop_event: asyncio.Event) -> AsyncIterator[RTDBWatchEvent]:
-        firebase_auth_settings = firebase_auth_settings_manager.get_settings(
-            self.settings.firebase_settings_key
-        )
-
-        token_manager = TokenManager(
-            api_key=firebase_auth_settings.api_key.get_secret_value(),
-            token_data_cache=FileTokenCache(self.settings.token_data_file_path),
-        )
+        token_manager = token_manager_registry.get(self.settings.firebase_settings_key)
 
         logger.info(f"Connected to Firebase RTDB: {self.settings.database_url}{self.settings.path}")
 

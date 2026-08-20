@@ -110,17 +110,17 @@ kiari は、AGI を目指す LLM エージェント構築のための汎用ラ�
 
 | パッケージ | 文書化時バージョン |
 | --- | --- |
-| kiarina (メタ) | 2.19.0 |
+| kiarina (メタ) | 2.25.0 |
 | kiarina-agi-audio | 2.15.0 |
 | kiarina-agi-base | 2.7.0 |
 | kiarina-agi-data | 2.19.0 |
-| kiarina-agi-data-builder | 2.19.0 |
-| kiarina-agi-file | 2.16.0 |
+| kiarina-agi-data-builder | 2.21.1 |
+| kiarina-agi-file | 2.21.3 |
 | kiarina-agi-flow | 2.11.0 |
-| kiarina-agi-image | 2.17.0 |
-| kiarina-agi-runner | 2.14.0 |
-| kiarina-agi-text | 2.19.0 |
-| kiarina-agi-tool | 2.17.0 |
+| kiarina-agi-image | 2.21.1 |
+| kiarina-agi-runner | 2.21.0 |
+| kiarina-agi-text | 2.22.1 |
+| kiarina-agi-tool | 2.22.0 |
 | kiarina-agi-video | 2.15.0 |
 | kiarina-currency | 2.3.1 |
 | kiarina-i18n | 2.3.1 |
@@ -128,8 +128,9 @@ kiari は、AGI を目指す LLM エージェント構築のための汎用ラ�
 | kiarina-lib-cloudflare | 2.3.1 |
 | kiarina-lib-cloudflare-d1 | 2.3.1 |
 | kiarina-lib-falkordb | 2.3.1 |
-| kiarina-lib-firebase | 2.3.1 |
-| kiarina-lib-firebase-rtdb | 2.3.1 |
+| kiarina-lib-firebase | 2.24.0 |
+| kiarina-lib-firebase-firestore | 2.25.0 |
+| kiarina-lib-firebase-rtdb | 2.25.0 |
 | kiarina-lib-google | 2.8.0 |
 | kiarina-lib-openai | 2.3.1 |
 | kiarina-lib-redis | 2.3.1 |

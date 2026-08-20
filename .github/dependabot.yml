@@ -1,7 +1,8 @@
 version: 2
 updates:
   # Python dependencies (uv.lock)
-  - package-ecosystem: "pip"
+  # The pip updater only reads pyproject.toml, so uv.lock is never updated by it.
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"

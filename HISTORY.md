@@ -1,5 +1,15 @@
 # HISTORY
 
+## 2026-08-21: kiarina 2.25.0 追従と v0.2.0 リリース
+
+- kiarina-lib-firebase の TokenStore / token_manager_registry 化に合わせ、RTDB watcher の
+  `FileTokenCache` と `token_data_file_path` を削除し、ID token を registry から取得する形へ移した
+  （トークンファイルのパスは `KIARINA_LIB_FIREBASE_TOKEN_DATA_FILE_PATH` へ移動）
+- 依存を全面更新し、Pillow 12.3.0 で残っていた Dependabot アラート（Pillow のみ 18 件）を解消した。
+  直接依存はすべて PyPI 最新に一致し、mcp 2.0 / openai 3 / redis 8 などの新メジャーは
+  kiarina・LangChain 側の制約で据え置き
+- lint・mypy、テスト 544 件、package build が成功することを確認した
+
 ## 2026-08-10: Dependabot 更新とセキュリティ修正
 
 - Dependabot PR 10 件を取り込み、GitPython 3.1.58、pypdf 6.15.0、cryptography 50.0.0、

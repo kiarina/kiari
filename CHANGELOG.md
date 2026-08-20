@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-21
+
 ### Added
 
 - Added GCS and Firebase Storage `HistoryRepository` implementations with
@@ -28,6 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   states and explicit accept/dismiss responses.
 - Delayed Pub/Sub acknowledgement until watch handler completion and released messages for
   redelivery after processing failures.
+- Refreshed every dependency to its latest compatible release, bringing Pillow to 12.3.0
+  and closing the open Pillow security advisories.
+- Bumped `jdx/mise-action` to 4.2.5 in the CI and release workflows.
 
 ### Removed
 

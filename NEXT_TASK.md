@@ -39,7 +39,11 @@ snapshot から更新されないため、アラートの状態だけが古い�
 ### 次の一手（どれか）
 
 1. 放置して再確認する。実害はなく、次に `uv.lock` を変更する commit を push した際に
-   再取り込みされる可能性が高い
+   再取り込みされる可能性が高い。
+   **2026-08-21 に `uv.lock` を変更する commit（`82d103f`, kiarina 2.27.0）を push したが、
+   直後に確認した SBOM はまだ 8/10 の snapshot（pillow 11.3.0 / kiarina 2.19.0）を返し、
+   open アラートは 18 件のままだった。** 非同期の再取り込みを待つ余地はあるので、
+   まず SBOM の pillow が 12.3.0 になっているか再確認する
 2. 18 件を "This alert is inaccurate or incorrect" で dismiss し、コメントに
    上記 job ログを残す（バッジを消したい場合）
 3. GitHub Support へ問い合わせる（graph が 10 日以上更新されない件として）

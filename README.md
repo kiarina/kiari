@@ -166,3 +166,43 @@ kiari ext slack watch-channel --channel $CHANNEL_ID
 mise run setup
 mise run ci
 ```
+
+### Using the working tree as the global `kiari`
+
+Install the checkout as a uv tool so that `kiari` on `PATH` runs the working tree while its
+dependencies stay isolated from the development `.venv`:
+
+```sh
+uv tool install --editable .
+```
+
+Source edits take effect immediately. After adding a dependency to `pyproject.toml`, refresh
+the tool environment:
+
+```sh
+uv tool upgrade kiari
+```
+
+A plugin that needs an extra package must declare it with `--with`. The tool environment is
+owned declaratively by `uv-receipt.toml`, so packages installed into it by hand are removed
+on the next upgrade. Every `--with` has to be repeated on each reinstall:
+
+```sh
+uv tool install --editable . --with <package> --force
+```
+
+Reinstalling without `--with` rebuilds the environment from `pyproject.toml` alone:
+
+```sh
+uv tool install --editable . --force
+```
+
+The tool environment resolves its own dependencies and does not read `uv.lock`, so its
+versions can drift from the development environment. Run `uv tool upgrade kiari` after
+`make upgrade` to keep them aligned.
+
+Remove the command with:
+
+```sh
+uv tool uninstall kiari
+```

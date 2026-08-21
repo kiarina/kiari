@@ -23,6 +23,21 @@ kiari は kiarina-python（`~/src/github.com/kiarina/kiarina-python`）の上に
 `docs/concepts/kiarina-python/overview.md`（パッケージ全体像と逆引き）を必ず読んでください。
 個別領域の詳細は「docs 以下の参照ガイド」から該当文書を辿ります。
 
+## 依存するとき
+
+**kiarina は PyPI ではなく git HEAD から解決します**（`pyproject.toml` の
+`[tool.uv.sources]`）。kiarina-python 側の変更を、リリース前にここで評価するためです。
+kiarina に入れた機能をすぐ kiari で使って確かめられる代わりに、**未リリースの API へ
+依存したまま気づかない**状態になり得ます。
+
+`pyproject.toml` の `kiarina[all]>=X` は PyPI の利用者に対する契約で、開発環境では
+一度も検証されません。守るのはリリース手順の責任です
+（`docs/runbooks/release/README.md`）。tag を打つと `release-pypi.yml` が
+`--no-sources` で解決し直して CI を回すので、floor が嘘なら publish 前に落ちます。
+
+`uv.lock` には commit が固定されるため、HEAD へ追随するのは `make upgrade` を
+叩いたときだけです。
+
 ## テストするとき
 
 Settings クラスの既定値、環境変数の読み込み、フィールド検証を直接確認するテストは追加しません。

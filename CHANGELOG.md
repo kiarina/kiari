@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Resolved kiarina from the HEAD of its default branch instead of PyPI during development,
+  so a change made in kiarina-python can be evaluated here before it is released. The
+  published wheel is unaffected: it still carries the `kiarina[all]` specifier, and
+  `release-pypi.yml` now re-resolves with `--no-sources` and runs the full CI against the
+  newest released kiarina, so a tag fails rather than publishing a floor that PyPI cannot
+  satisfy.
+
 - Required kiarina 2.27.0 or later. `kiarina.lib.firebase` renamed `TokenData` to `Token`,
   froze it, and now derives `project_id` / `uid` / `expires_at` from the `id_token` claims,
   so a token set is constructed from the refresh token and ID token alone. The RTDB watcher

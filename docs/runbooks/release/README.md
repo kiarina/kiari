@@ -2,6 +2,29 @@
 
 This guide explains the release procedure using version 0.1.0 as an example.
 
+## Release kiarina first
+
+Development resolves kiarina from its git HEAD (`[tool.uv.sources]` in `pyproject.toml`),
+so kiari can be using kiarina code that has never been released. The published wheel only
+carries the `kiarina[all]>=X` specifier, so releasing kiari in that state ships a promise
+that PyPI cannot satisfy.
+
+Before releasing kiari:
+
+1. Release kiarina-python, if kiari depends on anything newer than its latest release.
+2. Raise the `kiarina[all]` floor in `pyproject.toml` to that released version.
+3. Confirm the released combination actually works:
+
+   ```sh
+   uv sync --no-sources --all-extras --all-groups
+   mise run ci
+   uv sync --all-extras --all-groups   # restore the git HEAD environment
+   ```
+
+`release-pypi.yml` runs the same `--no-sources` check, so a floor that is still a lie fails
+the tag build before anything is published. Running it locally first just saves the round
+trip.
+
 ## Release Procedure
 
 ### 1. Update CHANGELOG

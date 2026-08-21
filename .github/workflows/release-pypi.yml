@@ -38,9 +38,13 @@ jobs:
                   mise use python@3.13
                   mise install
 
-            - name: Install dependencies
+            # --no-sources ignores [tool.uv.sources], so kiarina resolves from PyPI instead of
+            # its git HEAD. This is the gate on the `kiarina[all]` specifier in pyproject.toml:
+            # if kiari has come to depend on a kiarina API that is not released yet, the CI
+            # checks below fail and nothing is published.
+            - name: Install dependencies (released kiarina, not git HEAD)
               run: |
-                  mise exec -- uv sync --all-extras --all-groups
+                  mise exec -- uv sync --no-sources --all-extras --all-groups
 
             - name: Download test assets
               run: mise run test-assets:download

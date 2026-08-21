@@ -56,6 +56,18 @@ dependencies = [
     "audioop-lts>=0.2.2 ; python_full_version >= '3.13'",
 ]
 
+# Resolve kiarina from the HEAD of its default branch rather than PyPI, so that a change
+# made in kiarina-python can be validated here before it is released. uv.lock pins the
+# commit, so this stays reproducible; `make upgrade` moves it forward.
+#
+# This table never reaches the published metadata -- the wheel carries the `kiarina[all]`
+# specifier above, and that specifier is a promise to everyone installing kiari from PyPI.
+# Nothing in the development environment verifies it, so `release-pypi.yml` re-resolves
+# with `--no-sources` and runs the full CI against the newest *released* kiarina. See
+# docs/runbooks/release/README.md.
+[tool.uv.sources]
+kiarina = { git = "https://github.com/kiarina/kiarina-python.git", subdirectory = "packages/kiarina", branch = "main" }
+
 [project.urls]
 homepage = "https://github.com/kiarina/kiari"
 repository = "https://github.com/kiarina/kiari"

@@ -110,7 +110,7 @@ kiari は、AGI を目指す LLM エージェント構築のための汎用ラ�
 
 | パッケージ | 文書化時バージョン |
 | --- | --- |
-| kiarina (メタ) | 2.25.0 |
+| kiarina (メタ) | 2.27.0 |
 | kiarina-agi-audio | 2.15.0 |
 | kiarina-agi-base | 2.7.0 |
 | kiarina-agi-data | 2.19.0 |
@@ -128,9 +128,9 @@ kiari は、AGI を目指す LLM エージェント構築のための汎用ラ�
 | kiarina-lib-cloudflare | 2.3.1 |
 | kiarina-lib-cloudflare-d1 | 2.3.1 |
 | kiarina-lib-falkordb | 2.3.1 |
-| kiarina-lib-firebase | 2.24.0 |
-| kiarina-lib-firebase-firestore | 2.25.0 |
-| kiarina-lib-firebase-rtdb | 2.25.0 |
+| kiarina-lib-firebase | 2.27.0 |
+| kiarina-lib-firebase-firestore | 2.27.0 |
+| kiarina-lib-firebase-rtdb | 2.27.0 |
 | kiarina-lib-google | 2.8.0 |
 | kiarina-lib-openai | 2.3.1 |
 | kiarina-lib-redis | 2.3.1 |

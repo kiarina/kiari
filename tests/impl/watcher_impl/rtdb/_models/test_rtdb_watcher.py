@@ -1,9 +1,13 @@
 import asyncio
 from collections.abc import AsyncIterator
-from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from kiarina.lib.firebase import TokenData, TokenManager, token_manager_registry
+from kiarina.lib.firebase import (
+    InMemoryTokenStore,
+    Token,
+    TokenManager,
+    token_manager_registry,
+)
 
 from kiari.impl.watcher_impl.rtdb import RTDBWatcher, RTDBWatcherSettings
 from kiari.impl.watcher_impl.rtdb._models import rtdb_watcher as rtdb_watcher_module
@@ -12,11 +16,7 @@ from kiari.impl.watcher_impl.rtdb._models import rtdb_watcher as rtdb_watcher_mo
 async def test_watch_uses_the_token_manager_of_the_firebase_settings_key(monkeypatch) -> None:
     token_manager = TokenManager(
         api_key="api-key",
-        token_store=TokenData(
-            refresh_token="refresh-token",
-            id_token="id-token",
-            expires_at=datetime.now(UTC) + timedelta(hours=1),
-        ),
+        token_store=InMemoryTokenStore(Token(refresh_token="refresh-token", id_token="id-token")),
     )
     token_manager_registry.register("test_watcher", token_manager)
 

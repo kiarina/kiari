@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Required kiarina 2.27.0 or later. `kiarina.lib.firebase` renamed `TokenData` to `Token`,
+  froze it, and now derives `project_id` / `uid` / `expires_at` from the `id_token` claims,
+  so a token set is constructed from the refresh token and ID token alone. The RTDB watcher
+  still resolves its `TokenManager` through `token_manager_registry` and needs no change.
+- The Firebase token file path setting is now `token_file_path`
+  (`KIARINA_LIB_FIREBASE_TOKEN_FILE_PATH`), renamed from `token_data_file_path`
+  (`KIARINA_LIB_FIREBASE_TOKEN_DATA_FILE_PATH`).
+
 ## [0.2.0] - 2026-08-21
 
 ### Added

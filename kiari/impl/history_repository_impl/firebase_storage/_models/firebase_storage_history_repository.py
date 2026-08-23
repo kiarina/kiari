@@ -1,10 +1,10 @@
 import json
-from collections.abc import Callable
 from urllib.parse import quote
 
 import httpx
 from kiarina.agi.history import History
 from kiarina.agi.run_context import RunContext
+from kiarina.lib.firebase import token_manager_registry
 
 from kiari.lib.history_repository import BaseHistoryRepository
 
@@ -12,22 +12,16 @@ from .._settings import FirebaseStorageHistoryRepositorySettings
 
 
 class FirebaseStorageHistoryRepository(BaseHistoryRepository):
-    def __init__(
-        self,
-        settings: FirebaseStorageHistoryRepositorySettings,
-        *,
-        token_provider: Callable[[], str] | None = None,
-    ) -> None:
+    def __init__(self, settings: FirebaseStorageHistoryRepositorySettings) -> None:
         super().__init__()
         self.settings = settings
-        self._token_provider = token_provider
 
     async def _load(self, run_context: RunContext) -> History | None:
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get(
                 self._object_url(run_context),
                 params={"alt": "media"},
-                headers=self._headers(),
+                headers=await self._headers(),
             )
         if response.status_code == 404:
             return None
@@ -42,7 +36,7 @@ class FirebaseStorageHistoryRepository(BaseHistoryRepository):
             response = await client.post(
                 self._collection_url(),
                 params={"uploadType": "media", "name": self._object_name(run_context)},
-                headers={**self._headers(), "Content-Type": "application/json"},
+                headers={**await self._headers(), "Content-Type": "application/json"},
                 content=raw_data,
             )
         response.raise_for_status()
@@ -53,22 +47,15 @@ class FirebaseStorageHistoryRepository(BaseHistoryRepository):
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.delete(
                 self._object_url(run_context),
-                headers=self._headers(),
+                headers=await self._headers(),
             )
         if response.status_code != 404:
             response.raise_for_status()
 
-    def _headers(self) -> dict[str, str]:
-        token = (
-            self._token_provider()
-            if self._token_provider is not None
-            else self.settings.id_token.get_secret_value()
-            if self.settings.id_token is not None
-            else None
-        )
-        if token is None:
-            raise ValueError("Firebase ID token or token provider is required")
-        return {"Authorization": f"Bearer {token}"}
+    async def _headers(self) -> dict[str, str]:
+        token_manager = token_manager_registry.get(self.settings.firebase_settings_key)
+        token = await token_manager.get_token()
+        return {"Authorization": f"Bearer {token.id_token}"}
 
     def _collection_url(self) -> str:
         return f"https://firebasestorage.googleapis.com/v0/b/{self.settings.bucket_name}/o"

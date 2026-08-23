@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed (BREAKING)
+
+- Resolved the Firebase Storage `HistoryRepository`'s ID token through `token_manager_registry`,
+  the same way `RTDBWatcher` already does. `create_firebase_storage_history_repository` no longer
+  takes `token_provider`, the `id_token` setting is replaced by `firebase_settings_key`, and the
+  token is refreshed by the `TokenManager` instead of being pushed in from outside. A client that
+  only holds an ID token, with no refresh token, can no longer supply it directly.
+
 ### Changed
 
 - Resolved kiarina from the HEAD of its default branch instead of PyPI during development,

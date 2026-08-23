@@ -1,6 +1,6 @@
-from pydantic import Field, SecretStr
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic_settings_manager import SettingsManager
+from pydantic_settings_manager import SettingsKey, SettingsManager
 
 
 class FirebaseStorageHistoryRepositorySettings(BaseSettings):
@@ -19,10 +19,10 @@ class FirebaseStorageHistoryRepositorySettings(BaseSettings):
         title="Object Name Template",
         description="Firebase Storage object name template used to store one History per agent.",
     )
-    id_token: SecretStr | None = Field(
+    firebase_settings_key: SettingsKey | None = Field(
         default=None,
-        title="Firebase ID Token",
-        description="Static Firebase ID token. Inject a token provider for refreshable clients.",
+        title="Firebase Settings Key",
+        description="Settings key used to get a TokenManager from token_manager_registry.",
     )
     allow_delete: bool = Field(
         default=True,

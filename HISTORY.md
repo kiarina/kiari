@@ -1,5 +1,11 @@
 # HISTORY
 
+## 2026-08-27: Slack OAuth server のログから接続先設定を除外
+
+- CodeQL が検出した clear-text logging 2 件を受け、環境から設定可能な Slack OAuth server の
+  host / port を起動前後のログへ含めないようにした
+- 任意の listen address で実際に server lifecycle を通し、設定値がログへ残らないことをテストした
+
 ## 2026-08-27: 定期依存・セキュリティ巡回
 
 - Dependency graph が Pillow 12.3.0 と kiarina 2.27.0 を取り込み、保留していた Pillow の

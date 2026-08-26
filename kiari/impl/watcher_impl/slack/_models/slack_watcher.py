@@ -102,11 +102,7 @@ class SlackWatcher(BaseWatcher):
 
         if self.settings.is_multi_workspace:
             oauth_server_task = asyncio.create_task(self._start_oauth_server(stop_event))
-            logger.info(
-                f"OAuth server starting at "
-                f"http://{self.settings.oauth_server_host}:"
-                f"{self.settings.oauth_server_port}"
-            )
+            logger.info("OAuth server starting")
 
         start_handler = cast(
             Callable[[], Coroutine[Any, Any, None]],
@@ -302,11 +298,7 @@ class SlackWatcher(BaseWatcher):
             )
             await site.start()
 
-            logger.info(
-                f"OAuth server started at "
-                f"http://{self.settings.oauth_server_host}:"
-                f"{self.settings.oauth_server_port}"
-            )
+            logger.info("OAuth server started")
 
             await stop_event.wait()
 

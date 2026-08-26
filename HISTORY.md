@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-08-27: 定期依存・セキュリティ巡回
+
+- Dependency graph が Pillow 12.3.0 と kiarina 2.27.0 を取り込み、保留していた Pillow の
+  Dependabot アラート 18 件がすべて自動的に fixed になったことを確認した
+- lockfile の通常互換更新と kiarina-python git HEAD の再固定を行い、直接依存を制約内の
+  最新安定版へ揃えた
+- GitHub Actions の mise-action と mise runtime を更新し、通常 CI の `GITHUB_TOKEN` を
+  `contents: read` に制限した
+
 ## 2026-08-21: kiarina 2.25.0 追従と v0.2.0 リリース
 
 - kiarina-lib-firebase の TokenStore / token_manager_registry 化に合わせ、RTDB watcher の

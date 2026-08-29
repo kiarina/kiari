@@ -2,7 +2,7 @@ import asyncio
 
 import streamlit as st
 
-from kiari.core.paths import setup_app
+from kiari.core.app import setup_app
 from kiari.streamlit._constants import STREAMLIT_SESSION_KEY
 from kiari.streamlit._helpers.load_streamlit_startup_options import (
     load_streamlit_startup_options,

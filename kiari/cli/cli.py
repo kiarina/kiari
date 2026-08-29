@@ -10,7 +10,7 @@ from kiari.cli.profile.cli import profile
 from kiari.cli.schedule.cli import schedule
 from kiari.cli.streamlit.cli import streamlit
 from kiari.cli.watch.cli import watch
-from kiari.core.paths import setup_app
+from kiari.core.app import setup_app
 
 catalog.add_from_package_dir("kiari.resources.i18n")
 setup_app()

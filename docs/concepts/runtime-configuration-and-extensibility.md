@@ -52,7 +52,7 @@ Markdown execution file は front matter を RunSpec として扱い、本文を
 - Profile ごとの component config
 
 kiari の app root は OS 共通で `~/.kiari` とし、設定、永続データ、キャッシュをそれぞれ
-`config/`、`data/`、`cache/` へ分ける。`kiari.core.paths.setup_app()` が CLI、FastAPI、Streamlit の
+`config/`、`data/`、`cache/` へ分ける。`kiari.core.app.setup_app()` が CLI、FastAPI、Streamlit の
 各 entry point で kiarina の user directory override を設定するため、platformdirs や XDG の既定値は
 kiari の保存先に影響しない。
 

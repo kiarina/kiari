@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
@@ -25,7 +26,7 @@ def skip_costly(request: pytest.FixtureRequest) -> None:
 
 
 @pytest.fixture(scope="session", autouse=True)
-def configure_app(tmp_path_factory: pytest.TempPathFactory) -> None:
+def configure_app(tmp_path_factory: pytest.TempPathFactory) -> Iterator[None]:
     from contextlib import suppress
 
     from kiarina.utils.app import (
@@ -38,11 +39,17 @@ def configure_app(tmp_path_factory: pytest.TempPathFactory) -> None:
         configure(app_author="kiarina", app_name="kiari_tests")
 
     root = tmp_path_factory.mktemp("kiari-home")
+    patch = pytest.MonkeyPatch()
+    patch.setenv("HOME", str(root))
     app_settings.cli_args = {
         "user_cache_dir": str(root / "cache"),
         "user_config_dir": str(root / "config"),
         "user_data_dir": str(root / "data"),
     }
+
+    yield
+
+    patch.undo()
 
 
 @pytest.fixture(scope="session", autouse=True)

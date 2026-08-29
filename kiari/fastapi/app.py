@@ -6,8 +6,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from kiarina.agi.agent import run_agent
 
+from kiari.core.app import setup_app
 from kiari.core.finalizer import run_finalizers
-from kiari.core.paths import setup_app
 from kiari.core.runtime import setup_runtime
 
 from ._helpers.load_fastapi_startup_options import load_fastapi_startup_options

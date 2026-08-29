@@ -84,6 +84,7 @@ CLI の入口と、各実行モードのアプリケーションフローを持�
 複数の実行モードが共有する方針と初期化を持ちます。
 
 - `core/profile/`: Profile、保存済み RunSpec、検証済み `RunOptions`
+- `core/app/`: kiari の app identity、user directory policy、entry point 共通の初期化
 - `core/runtime/`: 設定ロード、組み込みツール登録、`kiarina` の各種 option 作成、履歴の開始・再開
 - `core/plugin/`: 解決済み Python ファイルを動的 module としてロード
 - `core/finalizer/`: 実行終了時の共有リソース解放

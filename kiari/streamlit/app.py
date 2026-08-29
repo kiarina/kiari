@@ -1,8 +1,8 @@
 import asyncio
 
 import streamlit as st
-from kiarina.utils.app import AppAlreadyConfiguredError, configure
 
+from kiari.core.paths import setup_app
 from kiari.streamlit._constants import STREAMLIT_SESSION_KEY
 from kiari.streamlit._helpers.load_streamlit_startup_options import (
     load_streamlit_startup_options,
@@ -28,10 +28,7 @@ st.set_page_config(
 
 @st.cache_resource
 def _get_runtime() -> StreamlitRuntime:
-    try:
-        configure(app_author="kiarina", app_name="kiari")
-    except AppAlreadyConfiguredError:
-        pass
+    setup_app()
     return asyncio.run(setup_streamlit_runtime(startup_options))
 
 

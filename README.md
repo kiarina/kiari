@@ -18,6 +18,9 @@ Start the interactive console:
 kiari
 ```
 
+kiari stores its configuration, persistent data, and cache under `~/.kiari/config`,
+`~/.kiari/data`, and `~/.kiari/cache`, respectively.
+
 Run a one-shot batch prompt:
 
 ```sh

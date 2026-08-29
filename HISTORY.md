@@ -1,5 +1,11 @@
 # HISTORY
 
+## 2026-08-30: kiari の user directory を `~/.kiari` 配下へ統一
+
+- platformdirs / XDG の OS 別既定値を使わず、config、data、cache をそれぞれ
+  `~/.kiari/config`、`~/.kiari/data`、`~/.kiari/cache` へ固定した
+- 通常 CLI、FastAPI worker、Streamlit worker が同じ初期化処理を使うようにした
+
 ## 2026-08-27: Slack OAuth server のログから接続先設定を除外
 
 - CodeQL が検出した clear-text logging 2 件を受け、環境から設定可能な Slack OAuth server の

@@ -1,13 +1,13 @@
 from collections.abc import AsyncGenerator, AsyncIterator
-from contextlib import asynccontextmanager, suppress
+from contextlib import asynccontextmanager
 from types import TracebackType
 
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from kiarina.agi.agent import run_agent
-from kiarina.utils.app import AppAlreadyConfiguredError, configure
 
 from kiari.core.finalizer import run_finalizers
+from kiari.core.paths import setup_app
 from kiari.core.runtime import setup_runtime
 
 from ._helpers.load_fastapi_startup_options import load_fastapi_startup_options
@@ -18,8 +18,7 @@ from .fastapi_handler import FastAPIHandler, FastAPIRequest, fastapi_handler_reg
 
 def create_app(startup_options: FastAPIStartupOptions | None = None) -> FastAPI:
     startup_options = startup_options or load_fastapi_startup_options()
-    with suppress(AppAlreadyConfiguredError):
-        configure(app_author="kiarina", app_name="kiari")
+    setup_app()
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:

@@ -1,6 +1,5 @@
 import rich_click as click
 from kiarina.i18n import catalog
-from kiarina.utils.app import configure
 
 from kiari.cli.admin.cli import admin
 from kiari.cli.batch.cli import batch
@@ -11,9 +10,10 @@ from kiari.cli.profile.cli import profile
 from kiari.cli.schedule.cli import schedule
 from kiari.cli.streamlit.cli import streamlit
 from kiari.cli.watch.cli import watch
+from kiari.core.paths import setup_app
 
 catalog.add_from_package_dir("kiari.resources.i18n")
-configure(app_author="kiarina", app_name="kiari")
+setup_app()
 
 
 class KiariGroup(click.RichGroup):

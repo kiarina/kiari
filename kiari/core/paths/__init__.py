@@ -1,3 +1,4 @@
+from ._helpers.setup_app import setup_app
 from ._utils.get_config_file_path import get_config_file_path
 from ._utils.get_github_cache_dir_path import get_github_cache_dir_path
 from ._utils.get_github_trusted_sources_file_path import (
@@ -22,4 +23,5 @@ __all__ = [
     "get_profiles_dir_path",
     "get_profiles_file_path",
     "get_prompt_session_history_file_path",
+    "setup_app",
 ]

@@ -51,6 +51,11 @@ Markdown execution file は front matter を RunSpec として扱い、本文を
 - Profile ごとの RunSpec
 - Profile ごとの component config
 
+kiari の app root は OS 共通で `~/.kiari` とし、設定、永続データ、キャッシュをそれぞれ
+`config/`、`data/`、`cache/` へ分ける。`kiari.core.paths.setup_app()` が CLI、FastAPI、Streamlit の
+各 entry point で kiarina の user directory override を設定するため、platformdirs や XDG の既定値は
+kiari の保存先に影響しない。
+
 ファイル位置の決定は `kiari/core/paths/` に集約されています。Profile が明示されなければ current Profile を使い、存在しない Profile 名を参照した場合も空の Profile として扱える設計です。
 
 RunSpec は「実行の選択」、Profile config は「registry や provider の構成」です。同じ Profile directory に置かれますが、ロード先と役割は別です。

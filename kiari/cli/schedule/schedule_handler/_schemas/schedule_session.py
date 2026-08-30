@@ -43,7 +43,7 @@ class ScheduleSession:
 
     @property
     def zone_info(self) -> ZoneInfo:
-        return ZoneInfo(self.run_context.time_zone)
+        return ZoneInfo(self.run_context.timezone)
 
     def mark_asap(self) -> None:
         self.is_asap = True

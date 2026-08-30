@@ -50,7 +50,7 @@ def render_console_status(
                 _format_item("user", session.run_context.user_id),
                 _format_item("agent", session.run_context.agent_id),
                 _format_item("node", session.run_context.node_id),
-                _format_item("tz", session.run_context.time_zone),
+                _format_item("tz", session.run_context.timezone),
                 _format_item("lang", session.run_context.language),
                 _format_item("currency", session.run_context.currency),
             ],

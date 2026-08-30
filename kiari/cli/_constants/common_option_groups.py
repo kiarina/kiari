@@ -88,7 +88,7 @@ COMMON_OPTION_GROUPS: list[OptionGroupDict] = [
             "--agent-id",
             "--runner-id",
             "--language",
-            "--time-zone",
+            "--timezone",
             "--currency",
         ],
     },

@@ -135,7 +135,7 @@ class CLII18n(I18n, scope="kiari.cli"):
     agent_id_help: str = "Agent ID to use as the default run context."
     node_id_help: str = "Node ID to use as the default run context."
     language_help: str = "Language code ISO 639-1 format (e.g., 'en', 'fr')."
-    time_zone_help: str = "Time zone in IANA format (e.g., 'America/New_York')."
+    timezone_help: str = "Time zone in IANA format (e.g., 'America/New_York')."
     currency_help: str = "Currency code in ISO 4217 format (e.g., 'USD', 'EUR')."
     # --------------------------------------------------
     # Config

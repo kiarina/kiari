@@ -244,7 +244,7 @@ def _setup_run_context(run_options: RunOptions) -> None:
 
         settings_manager.set_cli_args("node_id", node_id)
 
-    settings_manager.set_cli_args("time_zone", run_options.time_zone or str(get_localzone()))
+    settings_manager.set_cli_args("timezone", run_options.timezone or str(get_localzone()))
 
     settings_manager.set_cli_args(
         "language",

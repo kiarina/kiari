@@ -1,5 +1,12 @@
 # HISTORY
 
+## 2026-08-30: timezone の設定名を統一
+
+- `RunOptions.time_zone`、profile の `time_zone` key、CLI の `--time-zone` を、それぞれ
+  `timezone`、`timezone`、`--timezone` へ破壊的に変更した
+- kiarina-python の `RunContext.timezone` / `RunContextSettings.timezone` への変更に追従し、
+  schedule、status、chat/tool log まで同じ名称へ統一した
+
 ## 2026-08-30: kiari の user directory を `~/.kiari` 配下へ統一
 
 - platformdirs / XDG の OS 別既定値を使わず、config、data、cache をそれぞれ

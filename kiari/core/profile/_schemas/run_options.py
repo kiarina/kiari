@@ -1,6 +1,6 @@
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class RunOptions(BaseModel):
@@ -73,7 +73,7 @@ class RunOptions(BaseModel):
     agent_id: str = "default"
     node_id: str | None = None
     language: str | None = None
-    time_zone: str | None = None
+    timezone: str | None = None
     currency: str | None = None
     # --------------------------------------------------
     # GitHub
@@ -123,6 +123,7 @@ class RunOptions(BaseModel):
     # --------------------------------------------------
     interval: str | None = None
     cron: str | None = None
+
     schedule_handler: str | None = None
     skip_if_no_events: bool = False
     # --------------------------------------------------
@@ -145,6 +146,13 @@ class RunOptions(BaseModel):
     streamlit_layout: Literal["centered", "wide"] = "wide"
     streamlit_handler: str | None = None
     streamlit_authenticator: str | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def reject_old_time_zone_field(cls, data: Any) -> Any:
+        if isinstance(data, dict) and "time_zone" in data:
+            raise ValueError("time_zone was renamed to timezone")
+        return data
 
     @field_validator("fastapi_path")
     @classmethod

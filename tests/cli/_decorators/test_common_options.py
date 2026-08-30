@@ -107,3 +107,29 @@ def test_quiet() -> None:
     runner = CliRunner()
     runner.invoke(command, ["--quiet"])
     assert cli_args["log_level"] == "WARNING"
+
+
+def test_timezone() -> None:
+    cli_args = {}
+
+    @click.command()
+    @common_options
+    def command(**kwargs) -> None:
+        cli_args.update(kwargs)
+
+    runner = CliRunner()
+    result = runner.invoke(command, ["--timezone", "Asia/Tokyo"])
+
+    assert result.exit_code == 0
+    assert cli_args["timezone"] == "Asia/Tokyo"
+
+
+def test_rejects_old_time_zone_option() -> None:
+    @click.command()
+    @common_options
+    def command(**kwargs) -> None:
+        pass
+
+    result = CliRunner().invoke(command, ["--time-zone", "Asia/Tokyo"])
+
+    assert result.exit_code == 2

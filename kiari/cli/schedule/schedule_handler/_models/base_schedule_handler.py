@@ -184,7 +184,7 @@ class BaseScheduleHandler(ScheduleHandler):
         )
 
     def _now(self) -> datetime:
-        return datetime.now(ZoneInfo(RunContext().time_zone))
+        return datetime.now(ZoneInfo(RunContext().timezone))
 
     async def _on_session_completed(self, session: ScheduleSession) -> None:
         pass

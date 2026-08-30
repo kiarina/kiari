@@ -81,7 +81,7 @@ def common_options[**P, R](func: Callable[P, R]) -> Callable[P, R]:
     @click.option("--agent-id", type=str, help=t.agent_id_help)
     @click.option("--runner-id", type=str, help=t.node_id_help)
     @click.option("--language", type=str, help=t.language_help)
-    @click.option("--time-zone", type=str, help=t.time_zone_help)
+    @click.option("--timezone", type=str, help=t.timezone_help)
     @click.option("--currency", type=str, help=t.currency_help)
     # --------------------------------------------------
     # GitHub

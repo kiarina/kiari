@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed (BREAKING)
 
+- Renamed `RunOptions.time_zone` and the profile key `time_zone` to `timezone`, and
+  renamed the CLI option `--time-zone` to `--timezone`. This follows the corresponding
+  breaking rename in `kiarina-agi-base`'s `RunContext` and `RunContextSettings`.
 - Resolved the Firebase Storage `HistoryRepository`'s ID token through `token_manager_registry`,
   the same way `RTDBWatcher` already does. `create_firebase_storage_history_repository` no longer
   takes `token_provider`, the `id_token` setting is replaced by `firebase_settings_key`, and the

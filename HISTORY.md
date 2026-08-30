@@ -1,5 +1,13 @@
 # HISTORY
 
+## 2026-08-30: 技術ドキュメントを英語へ統一
+
+- ルートと package の README、`ARCHITECTURE.md`、`docs/` 以下の技術文書を英語の正典へ統一した
+- 存在しない `README.ja.md` へのリンクと sdist 設定を削除し、release 手順を
+  `docs/runbooks/release.md` へ移動した
+- `docs/concepts/kiarina-python/` は複数文書をまとめる主題別ディレクトリとして維持した
+- ローカル Markdown リンク、英語化対象の日本語残存、sdist 内容を確認し、package build が成功した
+
 ## 2026-08-30: timezone の設定名を統一
 
 - `RunOptions.time_zone`、profile の `time_zone` key、CLI の `--time-zone` を、それぞれ

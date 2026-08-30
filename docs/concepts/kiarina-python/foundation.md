@@ -1,77 +1,75 @@
-# Foundation: Context, Data Model, Chat (kiarina-agi-base / data / data-builder / file / text)
+# Foundation: Context, Data Model, Chat
 
-エージェントを支える横断的な基盤。kiari のコードで最も頻繁に import されるのはこの層です
-（`message`, `event`, `run_context`, `content`, `history` など）。
+The kiarina-agi-base, data, data-builder, file, and text packages provide the shared
+foundation most frequently imported by kiari.
 
-前提バージョンは [overview.md](overview.md#documented-versions) を参照。
+See [Documented Versions](overview.md#documented-versions) for the assumed versions.
 
-## kiarina-agi-base — 実行コンテキストと観測
+## kiarina-agi-base: Runtime Context and Observability
 
-| モジュール | 内容 |
+| Module | Responsibility |
 | --- | --- |
-| `kiarina.agi.run_context` | `RunContext`: 実行 ID・タイムゾーン等の実行時コンテキスト。`RunContextSettings` で構成 |
-| `kiarina.agi.cost_recorder` | コスト集計の抽象（`BaseCostRecorder` + registry）。kiari 実装例: なし（標準実装 `cost_recorder_impl/` を利用） |
-| `kiarina.agi.cost_logger` | コストのロギング抽象。kiari 実装例: `kiari/impl/cost_logger_impl/` |
-| `kiarina.agi.cost_record` / `cost_utils` | コストのデータ型と計算 |
-| `kiarina.agi.request_logger` | LLM リクエストのロギング抽象 |
-| `kiarina.agi.token_utils` | トークン数の見積り・計算 |
-| `kiarina.agi.console_utils` | コンソール表示ユーティリティ |
-| `kiarina.agi.file_utils` / `image_types` | ファイル・画像の補助型 |
+| `kiarina.agi.run_context` | `RunContext` and `RunContextSettings` for execution identity and timezone |
+| `kiarina.agi.cost_recorder` | Cost aggregation contract and registry |
+| `kiarina.agi.cost_logger` | Cost logging contract; kiari implementations are under `kiari/impl/cost_logger_impl/` |
+| `kiarina.agi.cost_record`, `cost_utils` | Cost data and calculations |
+| `kiarina.agi.request_logger` | LLM request logging contract |
+| `kiarina.agi.token_utils` | Token estimation and counting |
+| `kiarina.agi.console_utils` | Console presentation helpers |
+| `kiarina.agi.file_utils`, `image_types` | File and image helper types |
 
-## kiarina-agi-data — データモデル
+## kiarina-agi-data: Data Model
 
-エージェントが扱うデータの Pydantic モデル群。serialization、estimate、shrink などモデルに
-密接な基本操作を持ち、外部入力からの組み立てや複数モデルをまたぐ調整は data-builder が担当。
+This package owns the Pydantic models used by agents. Models contain closely related
+operations such as serialization, estimation, and shrinking. Cross-model construction and
+normalization belong to data-builder.
 
-| モジュール | 内容 |
+| Module | Responsibility |
 | --- | --- |
-| `kiarina.agi.message` | `Message` / `AIMessage` / `ToolMessage` などメッセージ型 |
-| `kiarina.agi.history` | `History`: 会話履歴。永続化の抽象は kiari 側 `kiari/lib/history_repository/` |
-| `kiarina.agi.event` | `Event`: agent 実行が流すイベント（ストリーミングの単位） |
-| `kiarina.agi.content` / `display_content` | メッセージ内コンテンツと表示用コンテンツ |
-| `kiarina.agi.file_info` / `file_info_pool` / `file_bundle` | 添付ファイルのメタデータと束 |
-| `kiarina.agi.tool_info` | ツール定義のメタデータ |
-| `kiarina.agi.chat_limits` / `chat_estimates` | コンテキスト上限と見積り |
-| `kiarina.agi.embedding` | 埋め込みデータ型 |
+| `kiarina.agi.message` | `Message`, `AIMessage`, `ToolMessage`, and related types |
+| `kiarina.agi.history` | Conversation `History`; kiari owns persistence adapters |
+| `kiarina.agi.event` | Streaming `Event` values emitted by agent runs |
+| `kiarina.agi.content`, `display_content` | Provider content and display content |
+| `kiarina.agi.file_info`, `file_info_pool`, `file_bundle` | Attachment metadata and alternatives |
+| `kiarina.agi.tool_info` | Tool definition metadata |
+| `kiarina.agi.chat_limits`, `chat_estimates` | Context limits and estimates |
+| `kiarina.agi.embedding` | Embedding data types |
 
-`History → Event → Message → Content → FileInfo` の所有関係、Event stream と永続化の境界、
-FileInfo pool の hydrate / dehydrate は [Data Model and History](data-model-and-history.md) を
-参照してください。
+See [Data Model and History](data-model-and-history.md) for ownership, streaming,
+persistence, and hydration boundaries.
 
-`FileInfo` の `pinned`、`inline`、`metadata_only`、`content_only`、`no_merge`、
-`group`、`unique_key`、`keep_from_end` は、履歴・上限調整・prompt 変換を変える実行時
-ポリシーです。生成経路と各パラメータの意味は
-[FileInfo and Data Builder](file-info-and-data-builder.md) を参照してください。
+`FileInfo` policy fields such as `pinned`, `inline`, `metadata_only`,
+`content_only`, `no_merge`, `group`, `unique_key`, and `keep_from_end` affect
+history, limit adjustment, and prompt conversion. See
+[FileInfo and Data Builder](file-info-and-data-builder.md).
 
-## kiarina-agi-data-builder — データの組み立て
+## kiarina-agi-data-builder: Data Construction
 
-`*_builder`（message / history / event / content / tool_info / file_info）、
-`file_factory`、`file_info_loader`、`local_scanner`（ローカルファイル走査）など。
-kiari の実行モードが入力（テキスト・添付・ファイル）を History に変換する際に使われます。
-利用箇所は `rg 'file_info_loader|event_builder|local_scanner' kiari/` で確認。
-`FileInfo` については builder だけでなく、segment normalizer と file adjuster まで一続きで
-読む必要があります。詳細は [FileInfo and Data Builder](file-info-and-data-builder.md) を参照。
+Builders for messages, histories, events, content, tools, and files convert execution-mode
+input into agent history. Related capabilities include file factories, loaders, local
+scanners, segment normalization, and file adjustment.
 
-2.19.0 以降、PDF / video builder は `analysis_enabled=True` のとき、chat model の capability に
-応じて内容を選べる `FileBundle` を生成します。PDF は native PDF、page image、抽出 text、video は
-native video、timestamp 付き frame、音声 transcript / ambient event を bundle に含め、model が
-未対応の media には fallback を使います。既定値は `False` なので、有効化と解像度・frame rate の
-指定方法は [FileInfo and Data Builder](file-info-and-data-builder.md) を参照してください。
+Use `rg 'file_info_loader|event_builder|local_scanner' kiari/` to find call sites.
 
-## kiarina-agi-file — ファイル・キャッシュ・リポジトリ抽象
+With analysis enabled, PDF and video builders can produce capability-aware `FileBundle`
+alternatives. PDFs may include native PDF, page images, and extracted text. Videos may
+include native video, timestamped frames, transcripts, and ambient events. The default is
+disabled; see [FileInfo and Data Builder](file-info-and-data-builder.md) for settings.
 
-`file`, `asset_cache`, `asset_repository`, `local_repository`。
-添付や生成物の保存・キャッシュに関わるときに見る。
+## kiarina-agi-file: Files, Caches, and Repositories
 
-## kiarina-agi-text — チャットモデルとテキスト埋め込み
+This package contains file abstractions, asset caches, asset repositories, and local
+repositories used for attachments and generated artifacts.
 
-| モジュール | 内容 |
+## kiarina-agi-text: Chat and Text Embeddings
+
+| Module | Responsibility |
 | --- | --- |
-| `kiarina.agi.chat_model` / `chat_provider` | チャット LLM の抽象と provider。`ChatOptions` はここ |
-| `kiarina.agi.langchain_chat_provider` | LangChain 経由の provider（Anthropic / OpenAI / Google 等はこれで繋がる） |
-| `kiarina.agi.chat_logger` | チャットのロギング抽象。kiari 実装例: `kiari/impl/chat_logger_impl/` |
-| `kiarina.agi.text_embedding_model` / `text_embedding_provider` | テキスト埋め込み |
+| `kiarina.agi.chat_model`, `chat_provider` | Chat model and provider contracts, including `ChatOptions` |
+| `kiarina.agi.langchain_chat_provider` | LangChain-backed Anthropic, OpenAI, Google, and other providers |
+| `kiarina.agi.chat_logger` | Chat logging contract; kiari implementations are under `kiari/impl/chat_logger_impl/` |
+| `kiarina.agi.text_embedding_model`, `text_embedding_provider` | Text embedding abstractions |
 
-OpenAI provider の cost record は 2.19.0 以降、tiered pricing と prompt cache write cost を
-区別して計算します。kiari の cost logger / recorder を変更するときは、入力・出力 token だけを
-前提にせず provider が生成する cost record の内訳を保持してください。
+Provider cost records may distinguish tiered pricing and prompt-cache write costs. Cost
+loggers and recorders must preserve the provider's full cost breakdown rather than assume
+only input and output token totals.

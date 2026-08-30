@@ -1,116 +1,120 @@
 # kiarina-python Overview
 
-kiari は、AGI を目指す LLM エージェント構築のための汎用ライブラリ群
-[kiarina-python](https://github.com/kiarina/kiarina-python) の上に作られています。
+kiari is built on [kiarina-python](https://github.com/kiarina/kiarina-python), a collection
+of general-purpose libraries for building LLM agents.
 
-- ローカルパス: `~/src/github.com/kiarina/kiarina-python`（正典はコード）
-- パッケージ実体: `packages/` 以下の uv workspace。名前空間は `kiarina.*`
+- Local checkout: `~/src/github.com/kiarina/kiarina-python`; source code is canonical
+- Package layout: a uv workspace under `packages/` using the `kiarina.*` namespace
 
-この文書は「何をしたいときに、どのパッケージを調べるか」の逆引き地図です。
-詳細仕様は各パッケージの README・ソース・テストを正典とし、ここには複製しません。
+This document is a reverse lookup for deciding which package to inspect. Package READMEs,
+source, and tests remain canonical for detailed behavior.
 
-> **バージョンずれに注意**: kiarina-python は仕様が頻繁に変わります。この文書群は
-> 文末の [Documented Versions](#documented-versions) 時点の記述です。kiari の `uv.lock` の
-> バージョンと表がずれていたら、[kiarina-python docs sync playbook](../../playbooks/kiarina-python-docs-sync.md)
-> に従って差分を確認し、文書を更新してください。
+> **Version drift:** Compare this document's [Documented Versions](#documented-versions)
+> with kiari's `uv.lock`. If they differ, follow the
+> [docs sync playbook](../../playbooks/kiarina-python-docs-sync.md).
 
 ## Package Layers
 
-| 接頭辞 | 役割 |
+| Prefix | Role |
 | --- | --- |
-| `kiarina-agi-*` | LLM エージェント構築の中核。`kiarina.agi.*` 名前空間 |
-| `kiarina-lib-*` | 外部サービスのクライアント（Anthropic, OpenAI, Google, Firebase, Redis, Cloudflare, Slack, FalkorDB, Atlassian）。`kiarina.lib.*` |
-| `kiarina-utils-*` | 汎用ユーティリティ（common / file / app）。`kiarina.utils.*` |
-| その他 | `kiarina-i18n`（国際化）、`kiarina-currency`（通貨・コスト換算）、`kiarina`（メタパッケージ） |
+| `kiarina-agi-*` | Agent core under `kiarina.agi.*` |
+| `kiarina-lib-*` | External-service clients under `kiarina.lib.*` |
+| `kiarina-utils-*` | Common, file, and application utilities under `kiarina.utils.*` |
+| Other | `kiarina-i18n`, `kiarina-currency`, and the `kiarina` meta package |
 
-## 逆引き: やりたいこと → 調べるパッケージ
+## Reverse Lookup: Goal to Package
 
-### エージェント実行まわり（詳細: [agent-and-runner.md](agent-and-runner.md)）
+### Agent Execution
 
-| やりたいこと | パッケージ / モジュール |
+See [Agent and Runner](agent-and-runner.md).
+
+| Goal | Package / module |
 | --- | --- |
-| Agent を定義・実行する（`run_agent` / `invoke_agent` / `stream_agent`） | `kiarina-agi-runner` → `kiarina.agi.agent` |
-| バックグラウンドタスクとして実行する | `kiarina-agi-runner` → `kiarina.agi.task_runner` |
-| 構造化出力（dict / Pydantic model 生成、選択肢の選択） | `kiarina-agi-runner` → `kiarina.agi.structured_output` |
+| Define or run an agent | `kiarina-agi-runner` → `kiarina.agi.agent` |
+| Run work as a task | `kiarina-agi-runner` → `kiarina.agi.task_runner` |
+| Generate structured output | `kiarina-agi-runner` → `kiarina.agi.structured_output` |
 
-### ワークフロー・プロンプト（詳細: [workflow-and-prompt.md](workflow-and-prompt.md)）
+### Workflows and Prompts
 
-| やりたいこと | パッケージ / モジュール |
+See [Workflow and Prompt](workflow-and-prompt.md).
+
+| Goal | Package / module |
 | --- | --- |
-| 複数ステップの処理を workflow として組む | `kiarina-agi-flow` → `kiarina.agi.workflow` |
-| プロンプト（LLM 1 呼び出しの単位）を定義する | `kiarina-agi-flow` → `kiarina.agi.prompt` |
-| プロンプトを部品（section）に分割・重み付けする | `kiarina-agi-flow` → `kiarina.agi.section` / `section_container` |
-| 状態遷移を管理する | `kiarina-agi-flow` → `kiarina.agi.state` / `state_machine` |
+| Compose multi-step workflows | `kiarina-agi-flow` → `kiarina.agi.workflow` |
+| Define one LLM prompt call | `kiarina-agi-flow` → `kiarina.agi.prompt` |
+| Compose and weight prompt sections | `kiarina-agi-flow` → `section`, `section_container` |
+| Manage state transitions | `kiarina-agi-flow` → `state`, `state_machine` |
 
-### ツール（詳細: [tools.md](tools.md)）
+### Tools
 
-| やりたいこと | パッケージ / モジュール |
+See [Tools](tools.md).
+
+| Goal | Package / module |
 | --- | --- |
-| ツールを定義・登録・実行する | `kiarina-agi-tool` → `kiarina.agi.tool` |
-| ツール実行前後のフック | `kiarina-agi-tool` → `kiarina.agi.pre_hook` / `post_hook` |
-| ツール実行のロギング | `kiarina-agi-tool` → `kiarina.agi.tool_logger` |
-| LangChain ツールとの相互運用 | `kiarina-agi-tool` → `kiarina.agi.langchain_tool` |
+| Define, register, and run tools | `kiarina-agi-tool` → `kiarina.agi.tool` |
+| Run pre- and post-tool hooks | `kiarina-agi-tool` → `pre_hook`, `post_hook` |
+| Log tool execution | `kiarina-agi-tool` → `tool_logger` |
+| Adapt LangChain tools | `kiarina-agi-tool` → `langchain_tool` |
 
-### 基盤・データモデル（詳細: [foundation.md](foundation.md)）
+### Foundation and Data
 
-| やりたいこと | パッケージ / モジュール |
+See [Foundation](foundation.md).
+
+| Goal | Package / module |
 | --- | --- |
-| 実行コンテキスト（実行 ID、タイムゾーン等） | `kiarina-agi-base` → `kiarina.agi.run_context` |
-| コスト記録・ロギング、リクエストログ、トークン計算 | `kiarina-agi-base` → `cost_recorder` / `cost_logger` / `request_logger` / `token_utils` |
-| Message / Event / Content / History / FileInfo / ToolInfo のデータモデル | `kiarina-agi-data` |
-| History / Event / Message / Content / FileInfo の関係と永続化 | [Data Model and History](data-model-and-history.md) |
-| FileInfo の生成と実行時ポリシー | [FileInfo and Data Builder](file-info-and-data-builder.md) |
-| 上記データの組み立て（builder / factory / loader） | `kiarina-agi-data-builder` |
-| チャットモデル・テキスト埋め込みの抽象 | `kiarina-agi-text` → `kiarina.agi.chat_model` ほか |
-| ファイル・キャッシュ・リポジトリ抽象 | `kiarina-agi-file` |
+| Runtime identity and timezone | `kiarina-agi-base` → `run_context` |
+| Cost, request, and token observation | `kiarina-agi-base` |
+| Message, event, content, history, file, and tool data | `kiarina-agi-data` |
+| Understand data ownership and persistence | [Data Model and History](data-model-and-history.md) |
+| Build files and apply runtime policies | [FileInfo and Data Builder](file-info-and-data-builder.md) |
+| Construct agent data | `kiarina-agi-data-builder` |
+| Configure chat models and text embeddings | `kiarina-agi-text` |
+| Store and cache files | `kiarina-agi-file` |
 
-### モダリティ別 provider
+### Modality Providers
 
-音声・画像・動画は「model 抽象 + provider 実装」の対で構成されます。
-新しい provider を追加・調査するときは該当パッケージの `*_model` / `*_provider` を見てください。
+Audio, image, and video packages pair model abstractions with provider implementations.
 
-| モダリティ | パッケージ | 主な機能 |
+| Modality | Package | Main capabilities |
 | --- | --- | --- |
-| 音声 | `kiarina-agi-audio` | ASR、TTS、VAD、話者交代検出、音声タグ付け、音声埋め込み |
-| 画像 | `kiarina-agi-image` | 画像生成、検出、セグメンテーション、OCR、画像埋め込み |
-| 動画 | `kiarina-agi-video` | 動画生成、動画ソース |
+| Audio | `kiarina-agi-audio` | ASR, TTS, VAD, speaker changes, tagging, embeddings |
+| Image | `kiarina-agi-image` | Generation, detection, segmentation, OCR, embeddings |
+| Video | `kiarina-agi-video` | Generation and video sources |
 
-### インフラ・ユーティリティ
+### Infrastructure and Utilities
 
-| やりたいこと | パッケージ |
+| Goal | Package |
 | --- | --- |
-| 外部サービスのクライアント設定・接続 | `kiarina-lib-*`（サービス名で選ぶ） |
-| component registry / SettingsManager（名前→実装解決の仕組み） | `kiarina-utils-common` |
-| ファイル I/O（エンコーディング・MIME 自動判定） | `kiarina-utils-file` |
-| アプリ基盤（起動設定、ユーザーディレクトリ、単一インスタンス制御） | `kiarina-utils-app` |
-| 国際化（i18n カタログ） | `kiarina-i18n` |
-| 通貨・為替（コスト表示） | `kiarina-currency` |
+| External-service configuration and clients | matching `kiarina-lib-*` package |
+| Component registries and SettingsManager | `kiarina-utils-common` |
+| File I/O, encoding, and MIME detection | `kiarina-utils-file` |
+| Startup, user directories, and single-instance control | `kiarina-utils-app` |
+| Translation catalogs | `kiarina-i18n` |
+| Currency conversion for cost display | `kiarina-currency` |
 
-## 共通パターン: registry + settings + impl
+## Common Pattern: Registry + Settings + Implementation
 
-`kiarina.agi.*` の component family（agent / workflow / prompt / tool / hook / logger / provider 系）は
-ほぼ同じ構造を持ちます。
+Most component families use the same structure:
 
-- `Base<Name>` クラスと `@<name>` デコレータで実装を定義
-- `<name>_registry` に名前で登録し、specifier（名前または import path）で解決
-- `<Name>Settings` + `settings_manager` で default / presets / customs を構成
-- 標準実装はソース内の隣接ディレクトリ `<name>_impl/` にある（例: `tool_impl/`, `prompt_impl/`）
+- Define implementations with `Base<Name>` and a `@<name>` decorator.
+- Register names in `<name>_registry` and resolve a name or import path specifier.
+- Configure defaults, presets, and custom implementations with `<Name>Settings` and
+  `settings_manager`.
+- Keep built-in implementations in an adjacent `<name>_impl/` package.
 
-`ComponentRegistry` の `expected_type` には具象クラスだけでなく、実行時の `isinstance` 検証に
-使える `@runtime_checkable` な Protocol も渡せます。
+A runtime-checkable protocol may be used as `ComponentRegistry.expected_type` when it
+supports `isinstance` validation.
 
-この仕組みが kiari 側でどう使われるかは
-[runtime-configuration-and-extensibility.md](../runtime-configuration-and-extensibility.md) を参照。
+See [Runtime, Configuration, and Extensibility](../runtime-configuration-and-extensibility.md)
+for how kiari applies this pattern.
 
 ## Documented Versions
 
-この文書群の記述が前提とするバージョン（= 執筆時点の kiari `uv.lock`）。
-`uv.lock` の実バージョンと比較し、ずれていたら
-[kiarina-python docs sync playbook](../../playbooks/kiarina-python-docs-sync.md) を実行してください。
+These versions correspond to the kiari `uv.lock` reviewed for this documentation.
 
-| パッケージ | 文書化時バージョン |
+| Package | Documented version |
 | --- | --- |
-| kiarina (メタ) | 2.27.0 |
+| kiarina (meta) | 2.27.0 |
 | kiarina-agi-audio | 2.15.0 |
 | kiarina-agi-base | 2.7.0 |
 | kiarina-agi-data | 2.19.0 |

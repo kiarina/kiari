@@ -1,25 +1,30 @@
 # Agent and Runner (kiarina-agi-runner)
 
-エージェントの実行エンジン。kiari の各実行モード（batch / console / watch / schedule）は
-最終的にここへ到達します。実行モード側の話は [execution-modes.md](../execution-modes.md) を参照。
+This package provides the agent execution engine. Every kiari execution mode—batch,
+console, watch, and schedule—eventually delegates to it. See
+[Execution Modes](../execution-modes.md) for mode-specific behavior.
 
-前提バージョンは [overview.md](overview.md#documented-versions) を参照。
+See [Documented Versions](overview.md#documented-versions) for the assumed versions.
 
 ## kiarina.agi.agent
 
-エージェント実行の中核。
+This module contains the core agent runtime.
 
-- 実行ヘルパー: `run_agent()`（Event の AsyncIterator を返す）、`invoke_agent()`、`stream_agent()`
-- `run_agent(history, *, run_context, chat_options, prompt_options, workflow_options, tool_options, agent_options, cost_recorder, stop_event, ...)` —
-  `History` を入力に、agent ループを回して `Event` を流す
-- 実装定義: `BaseAgent` を継承し `agent_registry` に登録。`AgentSettings` + `settings_manager` で
-  default / presets / customs を構成（[共通パターン](overview.md#共通パターン-registry--settings--impl)）
-- `AgentContext`: 実装に渡される実行時コンテキスト
-- `MissingToolsError`: 要求されたツールが解決できないときの例外
+- Execution helpers: `run_agent()`, which returns an asynchronous iterator of events,
+  plus `invoke_agent()` and `stream_agent()`
+- `run_agent(history, *, run_context, chat_options, prompt_options, workflow_options,
+  tool_options, agent_options, cost_recorder, stop_event, ...)`: runs the agent loop over
+  a `History` and emits `Event` objects
+- Implementations extend `BaseAgent` and register with `agent_registry`
+- `AgentSettings` and `settings_manager` configure defaults, presets, and custom
+  implementations; see the [common component pattern](overview.md#common-pattern-registry--settings--implementation)
+- `AgentContext` carries runtime state into implementations
+- `MissingToolsError` reports requested tools that cannot be resolved
 
-標準実装: `packages/kiarina-agi-runner/src/kiarina/agi/agent_impl/vanilla/`
+The standard implementation is under
+`packages/kiarina-agi-runner/src/kiarina/agi/agent_impl/vanilla/`.
 
-kiari 側の呼び出し例:
+kiari calls the runtime from:
 
 - `kiari/cli/batch/_operations/run_batch.py`
 - `kiari/cli/console/_operations/run_console.py`
@@ -28,15 +33,15 @@ kiari 側の呼び出し例:
 
 ## kiarina.agi.task_runner
 
-エージェント実行をタスクとして走らせるヘルパー: `run_task()` / `invoke_task()` / `stream_task()`。
-テスト: `packages/kiarina-agi-runner/tests/task_runner/`
+`run_task()`, `invoke_task()`, and `stream_task()` run agent work as tasks. Tests live
+under `packages/kiarina-agi-runner/tests/task_runner/`.
 
 ## kiarina.agi.structured_output
 
-LLM から構造化された結果を得るヘルパー。
+These helpers request structured LLM results:
 
-- `generate_dict()`: dict を生成
-- `generate_model()`: Pydantic model を生成
-- `select_option()`: 選択肢から選ばせる
+- `generate_dict()`: generate a dictionary
+- `generate_model()`: generate a Pydantic model
+- `select_option()`: select from a fixed set of options
 
-テスト: `packages/kiarina-agi-runner/tests/structured_output/`
+Tests live under `packages/kiarina-agi-runner/tests/structured_output/`.

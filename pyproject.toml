@@ -64,7 +64,7 @@ dependencies = [
 # specifier above, and that specifier is a promise to everyone installing kiari from PyPI.
 # Nothing in the development environment verifies it, so `release-pypi.yml` re-resolves
 # with `--no-sources` and runs the full CI against the newest *released* kiarina. See
-# docs/runbooks/release/README.md.
+# docs/runbooks/release.md.
 [tool.uv.sources]
 kiarina = { git = "https://github.com/kiarina/kiarina-python.git", subdirectory = "packages/kiarina", branch = "main" }
 
@@ -88,7 +88,6 @@ include = [
     "/kiari",
     "/tests",
     "/README.md",
-    "/README.ja.md",
     "/CHANGELOG.md",
     "/LICENSE",
     "/pyproject.toml",

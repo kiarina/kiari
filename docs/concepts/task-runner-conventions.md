@@ -1,59 +1,58 @@
 # Task Runner Conventions
 
-この文書は、kiari における mise tasks と Makefile の使い分けの規約を説明します。
+This document defines how kiari divides responsibilities between mise tasks and Make.
 
-## 原則
+## Principles
 
-- **ロジックはすべて mise tasks に書く。** `.mise/tasks/` 以下のスクリプトが処理の唯一の定義場所です。引数やフラグを持って構いません。
-- **Makefile は薄い入口。** 開発タスクは `mise run <task>` へ委譲し、依存関係の確認・同期だけは `uv` を直接呼び出します。シェルロジックは書きません。
-- CI (GitHub Actions) からも mise tasks を直接呼び出します。
+- Put all task logic in scripts under `.mise/tasks/`. Tasks may accept arguments and
+  flags.
+- Keep the Makefile as a thin entry point. Development targets delegate to
+  `mise run <task>`; only dependency inspection and synchronization call uv directly.
+- GitHub Actions also invokes mise tasks directly.
 
-## mise tasks
+## mise Tasks
 
-タスクは `.mise/tasks/` 以下に bash スクリプトとして配置します。
+Store each task as a Bash script under `.mise/tasks/`.
 
-- 冒頭に `#MISE description=...` と、引数・フラグがあれば `#USAGE` 宣言を書きます。
-- `set -euo pipefail` を必ず指定します。
-- コマンドは文字列連結 + `eval` ではなく、bash 配列で組み立てます。
-- 関連するタスクはディレクトリで namespace 化します(例: `changelog/extract` → `mise run changelog:extract`)。
+- Add `#MISE description=...` and any required `#USAGE` declarations.
+- Use `set -euo pipefail`.
+- Build commands with Bash arrays rather than string concatenation and `eval`.
+- Group related tasks into directory namespaces, such as
+  `changelog/extract` → `mise run changelog:extract`.
 
-主なタスク:
+| Task | Responsibility |
+| --- | --- |
+| `setup` | Install mise tools, dependencies, and test assets |
+| `format` | Run Ruff fixes and formatting; modifies code |
+| `lint` | Run Ruff checks, formatting checks, and mypy without modifying files |
+| `test` | Run pytest with optional coverage, costly, verbose, and path flags |
+| `ci` | Run lint, tests with coverage, and build |
+| `build` / `publish` | Build and publish the package |
+| `changelog:*` / `pyproject:*` | Perform release version operations |
+| `test-assets:*` / `test-settings:*` | Manage shared assets and encrypted settings |
 
-| タスク | 内容 |
-|---|---|
-| `setup` | 開発環境の構築(mise tools、依存関係、テストアセット) |
-| `format` | ruff check --fix + ruff format(コードを書き換える) |
-| `lint` | ruff check + ruff format --check + mypy(書き換えない) |
-| `test` | pytest 実行。`--coverage` / `--costly` / `--verbose` / `--path` フラグあり |
-| `ci` | lint → test --coverage → build |
-| `build` / `publish` | パッケージのビルドと PyPI 公開 |
-| `changelog:*` / `pyproject:*` | リリース用のバージョン操作 |
-| `test-assets:*` / `test-settings:*` | テストアセットと暗号化テスト設定の管理 |
-
-静的検査は次の境界で実行します。
-
-- Ruff は `kiari/` と `tests/` を検査し、pycodestyle、Pyflakes、isort、flake8-bugbear、
-  flake8-comprehensions、pyupgrade、Ruff 固有ルールを有効にする
-- mypy は `kiari/` 本体を strict mode で検査する
-- `lint` はファイルを書き換えず、auto-fix は `format` だけが実行する
+Ruff checks `kiari/` and `tests/`. mypy checks `kiari/` in strict mode. Only
+`format` applies automatic changes.
 
 ## Makefile
 
-Makefile は mise を知らない人でも `make` だけで日常の開発操作を行えるようにするための入り口です。ターゲット構成は kiarina-python と揃えます。
+The Makefile offers familiar daily entry points and follows the kiarina-python target
+layout.
 
-- 開発タスクは対応する `mise run <task>` を呼び出します。
-- `list` / `update` / `upgrade` は、依存関係の状態を確認・同期するため `uv` を直接呼び出します。
-- `check` は format と lint を順に実行し、既定ターゲットとして使います。
-- ターゲットは引数を受け取りません。汎用フラグ付きで呼びたい場合は mise task を直接使います(例: `mise run test --costly`)。
-- 環境準備が必要な定型テストには、対象 path とフラグを固定した薄い専用ターゲットを設けられます。`chrome_test` は実 Chrome Bridge 用の例です。
-- レシピに条件分岐などのシェルロジックを書いてはいけません。
+- Development targets call their corresponding mise task.
+- `list`, `update`, and `upgrade` call uv directly for dependency inspection and sync.
+- `check`, the default target, runs format and then lint.
+- Make targets do not accept general arguments; call mise directly when flags are needed.
+- A thin dedicated target may fix a path and flags for an environment-specific test.
+  `chrome_test` is the real Chrome Bridge example.
+- Do not add shell branching or other workflow logic to recipes.
 
-## 使い分けの目安
+## Choosing an Entry Point
 
 ```sh
-make            # format → lint
-make ci         # CI と同じチェック (lint → test --coverage → build)
-mise run ci     # CI と同じチェック (lint → test --coverage → build)
-mise run test --costly   # フラグが必要な呼び出しは mise を直接使う
-make chrome_test         # 実 Chrome Bridge 環境で costly integration test を実行
+make                         # format, then lint
+make ci                      # lint, test with coverage, then build
+mise run ci                  # same CI sequence
+mise run test --costly       # call mise directly when flags are needed
+make chrome_test             # real Chrome Bridge integration test
 ```

@@ -1,7 +1,5 @@
 # kiari
 
-[English](README.md) | [Japanese](README.ja.md)
-
 `kiari` is a CLI tool for developing and experimenting with qualia-oriented LLM agents.
 
 ## Installation

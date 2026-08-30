@@ -1,50 +1,54 @@
 # Workflow and Prompt (kiarina-agi-flow)
 
-エージェントの 1 イテレーションを構成する workflow / prompt / section / state の各層。
-agent（[agent-and-runner.md](agent-and-runner.md)）がループを回し、workflow がループ内の
-処理手順を、prompt が LLM 呼び出しを、section がプロンプト本文の部品を担います。
+This package defines the workflow, prompt, section, and state layers within one agent
+iteration. The [agent](agent-and-runner.md) owns the loop, a workflow owns the steps inside
+the loop, a prompt owns one LLM call, and sections compose the prompt body.
 
-前提バージョンは [overview.md](overview.md#documented-versions) を参照。
+See [Documented Versions](overview.md#documented-versions) for the assumed versions.
 
 ## kiarina.agi.workflow
 
-処理フローの単位。
+A workflow is one unit of processing flow.
 
-- 定義: `@workflow` デコレータ、または `BaseWorkflow` 継承 + `workflow_registry` 登録
-- 実行: `run_workflow()` / `invoke_workflow()` / `stream_workflow()`
-- 構成: `WorkflowSettings` + `settings_manager`、specifier で解決
-  （[共通パターン](overview.md#共通パターン-registry--settings--impl)）
+- Define one with `@workflow`, or extend `BaseWorkflow` and register it with
+  `workflow_registry`
+- Run one with `run_workflow()`, `invoke_workflow()`, or `stream_workflow()`
+- Configure defaults, presets, and custom implementations through `WorkflowSettings`,
+  `settings_manager`, and specifiers
 
-標準実装: `packages/kiarina-agi-flow/src/kiarina/agi/workflow_impl/vanilla/`
-テスト: `packages/kiarina-agi-flow/tests/workflow/`
+See the [common component pattern](overview.md#common-pattern-registry--settings--implementation).
+The standard implementation is under
+`packages/kiarina-agi-flow/src/kiarina/agi/workflow_impl/vanilla/`.
 
 ## kiarina.agi.prompt
 
-LLM 1 呼び出しの単位。API 形状は workflow と同型
-（`@prompt` / `BasePrompt` / `run_prompt()` / `invoke_prompt()` / `stream_prompt()` /
-`prompt_registry` / `PromptSettings`）。
+A prompt represents one LLM call. Its API mirrors workflows:
+`@prompt`, `BasePrompt`, `run_prompt()`, `invoke_prompt()`, `stream_prompt()`,
+`prompt_registry`, and `PromptSettings`.
 
-標準実装: `packages/kiarina-agi-flow/src/kiarina/agi/prompt_impl/`（`vanilla/`, `structured/`）
-テスト: `packages/kiarina-agi-flow/tests/prompt/`, `tests/prompt_impl/`
+Standard implementations are under
+`packages/kiarina-agi-flow/src/kiarina/agi/prompt_impl/`, including `vanilla/` and
+`structured/`. Tests are under `tests/prompt/` and `tests/prompt_impl/`.
 
-kiari 側の利用箇所は `grep -r 'kiarina.agi.prompt' kiari/` で確認。
+Use `rg 'kiarina.agi.prompt' kiari/` to find kiari call sites.
 
 ## kiarina.agi.section / section_container
 
-プロンプト本文を部品化する仕組み。
+Sections compose a prompt body.
 
-- `BaseSection` + `SectionContext`、`Weight` による優先度・重み付け
-- `SectionContainer` が section 群を束ねて本文を組み立てる
+- `BaseSection` and `SectionContext` define section behavior
+- `Weight` assigns priority
+- `SectionContainer` combines sections into the final body
 
-実装例・テスト: `packages/kiarina-agi-flow/src/kiarina/agi/section_impl/`,
-`packages/kiarina-agi-flow/tests/section/`, `tests/section_container/`
+Implementations and tests are under `section_impl/`, `tests/section/`, and
+`tests/section_container/`.
 
 ## kiarina.agi.state / state_machine
 
-状態遷移の管理。
+States model transitions within a flow.
 
-- `@state` デコレータ / `BaseState` + `StateContext` で状態を定義
-- `StateMachine` が遷移を駆動
+- Define states with `@state`, or with `BaseState` and `StateContext`
+- `StateMachine` drives transitions
 
-実装例・テスト: `packages/kiarina-agi-flow/src/kiarina/agi/state_impl/`,
-`packages/kiarina-agi-flow/tests/state/`, `tests/state_machine/`
+Implementations and tests are under `state_impl/`, `tests/state/`, and
+`tests/state_machine/`.

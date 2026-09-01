@@ -1,6 +1,6 @@
 # HISTORY
 
-## 2026-09-01: タスク管理を `tasks/` へ移行（MacBook Pro M1 Max）
+## 2026-09-01: タスク管理を `tasks/` へ移行
 
 - `NEXT_TASK.md` と `MEMO.md` を廃止し、1 タスク 1 ファイルの `tasks/` へ置き換えた
   （spirits-garden / dqxtool と同じ構成）

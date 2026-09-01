@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-09-01: タスク管理を `tasks/` へ移行（MacBook Pro M1 Max）
+
+- `NEXT_TASK.md` と `MEMO.md` を廃止し、1 タスク 1 ファイルの `tasks/` へ置き換えた
+  （spirits-garden / dqxtool と同じ構成）
+- 残っていた 3 件を `tasks/kiapi-web-search-empty-result.md`、
+  `tasks/timezone-rename-release-gate.md`、`tasks/config-merge-output-command.md` へ移した
+- `AGENTS.md` に「タスク管理の使い分け」と、ポインタだけを置く「タスク一覧」を追加した
+- `docs/playbooks/kiarina-python-docs-sync.md` の引き継ぎ先を `tasks/` へ更新した
+
 ## 2026-08-30: 技術ドキュメントを英語へ統一
 
 - ルートと package の README、`ARCHITECTURE.md`、`docs/` 以下の技術文書を英語の正典へ統一した

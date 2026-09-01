@@ -11,7 +11,7 @@ git diff uv.lock | grep -B2 '^[-+]version' | grep -A2 'kiarina'
 ```
 
 Because kiarina-python changes frequently, an upgrade commit must either complete this
-playbook or record the outstanding sync in `NEXT_TASK.md`.
+playbook or record the outstanding sync as a file under `tasks/`.
 
 ## 1. Detect Version Drift
 
@@ -44,4 +44,5 @@ For each package with drift, inspect the local
 ## 4. Record Follow-Up Work
 
 - Put reusable knowledge in the relevant document.
-- Put unresolved breaking changes or required kiari code changes in `NEXT_TASK.md`.
+- Put unresolved breaking changes or required kiari code changes in a `tasks/` file,
+  and add a pointer line to the task list in `AGENTS.md`.

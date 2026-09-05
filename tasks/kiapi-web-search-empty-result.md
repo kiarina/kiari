@@ -20,6 +20,11 @@ kiari 側の実装が原因か、kiapi server / 検索 provider の状態が原�
 
 未着手。2026-08-30 時点の再現確認のみ。
 
+2026-09-05 の依存巡回（MacBook Pro M1 Max）では、`tests/impl/web_impl/kiapi/` の
+4 件がいずれも SKIPPED となり、この失敗を再現できなかった。test settings を
+download していない環境では kiapi のテストが実行されずに skip されるため、
+再現には先に `make download-test-settings` が必要。
+
 ## 申し送り
 
 - 空結果は例外にならないため、テストが落ちるまで劣化に気づけない。原因確定後、

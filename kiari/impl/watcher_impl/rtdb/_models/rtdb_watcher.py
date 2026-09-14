@@ -23,7 +23,7 @@ class RTDBWatcher(BaseWatcher):
 
         logger.info(f"Connected to Firebase RTDB: {self.settings.database_url}{self.settings.path}")
 
-        async for event in watch_data(
+        async for value in watch_data(
             database_url=self.settings.database_url,
             path=self.settings.path,
             token_manager=token_manager,
@@ -31,9 +31,8 @@ class RTDBWatcher(BaseWatcher):
         ):
             yield RTDBWatchEvent.create(
                 watcher_name=self.name,
-                event_type=event.event_type,
-                path=event.path,
-                data=event.data,
+                path=self.settings.path,
+                data=value,
             )
 
-            logger.debug(f"Data changed at path: {event.path}")
+            logger.debug(f"Data changed at path: {self.settings.path}")

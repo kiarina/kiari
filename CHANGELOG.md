@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed (BREAKING)
 
+- `RTDBWatcher` emits the whole current value of the watched path each time it changes,
+  following `kiarina-lib-firebase-rtdb` 2.29.0, whose `watch_data` yields values instead of
+  raw `put` / `patch` events. `RTDBWatchPayload` drops `event_type`, `path` is now the
+  watched path, and `data` is its current value (`None` while the path does not exist).
 - Renamed `RunOptions.time_zone` and the profile key `time_zone` to `timezone`, and
   renamed the CLI option `--time-zone` to `--timezone`. This follows the corresponding
   breaking rename in `kiarina-agi-base`'s `RunContext` and `RunContextSettings`.

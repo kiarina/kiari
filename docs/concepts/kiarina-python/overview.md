@@ -114,7 +114,7 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 
 | Package | Documented version |
 | --- | --- |
-| kiarina (meta) | 2.28.1 |
+| kiarina (meta) | 2.29.0 |
 | kiarina-agi-audio | 2.28.0 |
 | kiarina-agi-base | 2.28.0 |
 | kiarina-agi-data | 2.19.0 |
@@ -134,7 +134,7 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 | kiarina-lib-falkordb | 2.28.0 |
 | kiarina-lib-firebase | 2.27.0 |
 | kiarina-lib-firebase-firestore | 2.27.0 |
-| kiarina-lib-firebase-rtdb | 2.28.1 |
+| kiarina-lib-firebase-rtdb | 2.29.0 |
 | kiarina-lib-google | 2.8.0 |
 | kiarina-lib-openai | 2.3.1 |
 | kiarina-lib-redis | 2.3.1 |

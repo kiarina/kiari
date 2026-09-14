@@ -13,14 +13,15 @@
 
 ## やること
 
-- [ ] `timezone` を含む kiarina-python をリリースする
-- [ ] `pyproject.toml` の `kiarina[all]` の下限を、そのリリース version へ上げる
+- [x] `timezone` を含む kiarina-python をリリースする（2.28.0 で公開済み）
+- [x] `pyproject.toml` の `kiarina[all]` の下限を、そのリリース version へ上げる
+  （2026-09-15 に RTDB watcher の追従で `>=2.29.0` へ上げた。2.29.0 は 2.28.0 を含む）
 - [ ] release workflow の `--no-sources` 検証を通す
 - [ ] リリース後、`CHANGELOG.md` に破壊的変更として記載されていることを確認する
 
 ## 進捗
 
-未着手。kiari 側の rename は完了済み。
+kiari 側の rename は完了済み。下限は 2.29.0 まで上げた。残りはリリース時の `--no-sources` 検証と CHANGELOG の確認。
 
 ## 申し送り
 

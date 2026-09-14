@@ -11,10 +11,6 @@ class RTDBWatchEvent(WatchEvent):
         return RTDBWatchPayload.model_validate_json(self.text)
 
     @property
-    def event_type(self) -> str:
-        return self.payload.event_type
-
-    @property
     def path(self) -> str:
         return self.payload.path
 
@@ -27,12 +23,10 @@ class RTDBWatchEvent(WatchEvent):
         cls,
         *,
         watcher_name: WatcherName,
-        event_type: str,
         path: str,
         data: Any,
     ) -> Self:
         payload = RTDBWatchPayload(
-            event_type=event_type,
             path=path,
             data=data,
         )

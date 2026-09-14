@@ -24,8 +24,7 @@ async def test_watch_uses_the_token_manager_of_the_firebase_settings_key(monkeyp
 
     async def watch_data(**kwargs: Any) -> AsyncIterator[Any]:
         captured.update(kwargs)
-        return
-        yield  # pragma: no cover
+        yield {"message": "hello"}
 
     monkeypatch.setattr(rtdb_watcher_module, "watch_data", watch_data)
 
@@ -39,10 +38,12 @@ async def test_watch_uses_the_token_manager_of_the_firebase_settings_key(monkeyp
     watcher.name = "rtdb"
 
     try:
-        assert [event async for event in watcher.watch(asyncio.Event())] == []
+        events = [event async for event in watcher.watch(asyncio.Event())]
     finally:
         token_manager_registry.unregister("test_watcher")
 
     assert captured["token_manager"] is token_manager
     assert captured["database_url"] == "https://example.test"
     assert captured["path"] == "/events"
+    # watch_data yields the whole value, so the event carries the watched path.
+    assert [(event.path, event.data) for event in events] == [("/events", {"message": "hello"})]

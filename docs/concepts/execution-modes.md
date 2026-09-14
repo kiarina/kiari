@@ -61,6 +61,9 @@ module-level singletons.
 
 ## Watch Mode
 
+`run_watch` is a public API exported from `kiari.cli.watch`. It accepts an external
+`stop_event` and requires at least one watcher.
+
 Watchers normalize service input into `WatchEvent` objects and feed a bounded
 `asyncio.Queue`. Workers create sessions and run the agent.
 

@@ -287,7 +287,7 @@ distribution must be reviewed for expansion of the code-execution boundary.
 | --- | --- | --- |
 | CLI option or argument | `kiari/cli/*/cli.py`, decorators | `RunOptions`, startup payload, tests |
 | Shared agent behavior | `kiari/core/runtime/` | `kiarina.agi`, handler bases |
-| One mode's lifecycle | `kiari/cli/<mode>/_operations/` | handler contract and session schema |
+| One mode's lifecycle | `kiari/cli/<mode>/_operations/` (schedule and watch: `_helpers/`) | handler contract and session schema |
 | New external event source | `kiari/lib/watcher/` | watcher implementations, watch, schedule |
 | New agent tool | `kiari/impl/tool_impl/` | registration and component config |
 | New persistence backend | `kiari/lib/history_repository/` | repository implementations and setup |
@@ -296,8 +296,8 @@ distribution must be reviewed for expansion of the code-execution boundary.
 | Terminal rendering | `kiari/core/rich/`, mode renderer | i18n and CLI tests |
 | Shared-resource cleanup | `kiari/core/finalizer/` | resource owner |
 
-Schedule is a public API exception: start at `_helpers/run_schedule.py` rather than a
-private `_operations/` package.
+Schedule and watch are public API exceptions: start at `_helpers/run_schedule.py` or
+`_helpers/run_watch.py` rather than a private `_operations/` package.
 
 ## Architectural Conventions
 

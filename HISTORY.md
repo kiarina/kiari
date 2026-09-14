@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-09-14: watch modeの公開APIと外部stop_event注入
+
+- `run_watch`を`_operations/`から`_helpers/`へ移し、`kiari.cli.watch`の公開APIとして
+  exportした。Spirits GardenのBrainが私有パスへ直接依存していた状態を解消する
+  （2026-08-10のschedule modeと同じ形）
+- `run_watch`へ外部`stop_event`注入を追加した。SIGINTと同じイベントを共有するため、
+  外部停止でもqueue済みのeventを処理してから終了する
+- テストは公開面からのimportへ切り替え、外部stop_eventでの停止テストを追加した
+
 ## 2026-09-01: タスク管理を `tasks/` へ移行
 
 - `NEXT_TASK.md` と `MEMO.md` を廃止し、1 タスク 1 ファイルの `tasks/` へ置き換えた

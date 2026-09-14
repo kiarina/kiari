@@ -15,7 +15,12 @@ logger = logging.getLogger(__name__)
 type WatchEventQueue = asyncio.Queue[WatchEvent | None]
 
 
-async def run_watch(profile_name: ProfileName, run_options: RunOptions) -> None:
+async def run_watch(
+    profile_name: ProfileName,
+    run_options: RunOptions,
+    *,
+    stop_event: asyncio.Event | None = None,
+) -> None:
     if not run_options.watchers:
         raise ValueError("Watch mode requires at least one watcher.")
 
@@ -34,7 +39,7 @@ async def run_watch(profile_name: ProfileName, run_options: RunOptions) -> None:
         for _ in range(run_options.watch_max_concurrent)
     ]
 
-    with graceful_shutdown() as stop_event:
+    with graceful_shutdown(stop_event) as stop_event:
         watcher_tasks = [
             asyncio.create_task(
                 _watcher_loop(

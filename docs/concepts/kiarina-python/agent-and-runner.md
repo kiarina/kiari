@@ -28,8 +28,8 @@ kiari calls the runtime from:
 
 - `kiari/cli/batch/_operations/run_batch.py`
 - `kiari/cli/console/_operations/run_console.py`
-- `kiari/cli/watch/_operations/run_watch.py`
-- `kiari/cli/schedule/_operations/run_schedule.py`
+- `kiari/cli/watch/_helpers/run_watch.py`
+- `kiari/cli/schedule/_helpers/run_schedule.py`
 
 ## kiarina.agi.task_runner
 

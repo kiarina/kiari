@@ -9,7 +9,7 @@ from kiari.core.runtime import setup_runtime
 
 from ._constants.watch_option_group import WATCH_OPTION_GROUP
 from ._decorators.watch_options import watch_options
-from ._operations.run_watch import run_watch
+from ._helpers.run_watch import run_watch
 
 click.rich_click.OPTION_GROUPS["kiari watch"] = [
     WATCH_OPTION_GROUP,

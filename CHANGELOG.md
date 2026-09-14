@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Exposed `run_watch` as the public API of `kiari.cli.watch` (moved from `_operations/`
+  to `_helpers/`) so embedding runtimes can import it without touching private paths.
+- Added optional `stop_event` injection to `run_watch` so an embedding runtime can stop
+  the watch loop externally; queued events are drained before the loop exits.
+
 ### Changed (BREAKING)
 
 - Renamed `RunOptions.time_zone` and the profile key `time_zone` to `timezone`, and

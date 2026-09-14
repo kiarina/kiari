@@ -7,7 +7,8 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from kiari.cli.watch._operations.run_watch import _worker, run_watch
+from kiari.cli.watch import run_watch
+from kiari.cli.watch._helpers.run_watch import _worker
 from kiari.core.profile import RunOptions
 from kiari.lib.watcher import BaseWatcher, DiscardWatchEvent, WatchEvent, watcher_registry
 
@@ -99,6 +100,30 @@ async def test_graceful_shutdown() -> None:
         signal_handler(signal.SIGINT, None)
 
     await task
+
+
+async def test_external_stop_event() -> None:
+    stop_event = asyncio.Event()
+
+    task = asyncio.create_task(
+        run_watch(
+            "default",
+            RunOptions(
+                watchers=["continuous"],
+                chat_model="mock",
+                no_save=True,
+                watch_queue_size=2,
+                watch_max_concurrent=1,
+            ),
+            stop_event=stop_event,
+        )
+    )
+
+    await asyncio.sleep(0.2)
+
+    stop_event.set()
+
+    await asyncio.wait_for(task, timeout=5)
 
 
 async def test_force_shutdown() -> None:

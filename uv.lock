@@ -485,15 +485,15 @@ wheels = [
 
 [[package]]
 name = "chrome-bridge-sdk"
-version = "0.4.0"
+version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "chrome-bridge-mcp" },
     { name = "httpx2" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f5/25/752ff1df9e87076bf5128945aad2cf4f0da719ea9353e6d4a073ea8ed53f/chrome_bridge_sdk-0.4.0.tar.gz", hash = "sha256:b48c3640455c06b861a360f0023684ea0b00fb5717a41b33d5088dbbe7d66ed5", size = 10180, upload-time = "2026-07-24T19:49:52.969Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/f8/2bbdc88c4b9f611a9018c4766ba484466b21be676ed49653703237562bc3/chrome_bridge_sdk-0.4.1.tar.gz", hash = "sha256:1b1a2d3bbcda4e975ba8b190c548894940943df8b524764f92f5cce621532c32", size = 10437, upload-time = "2026-09-05T06:05:43.078Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/38/8e/9137626f9b4e35aeb29e8b75cd7462981f0aedce0d3af541cc62098f99fe/chrome_bridge_sdk-0.4.0-py3-none-any.whl", hash = "sha256:c7f3679bdba75fb17d7fdd8104781a0422e4c34f7bc77a52bb287e9b85301059", size = 11100, upload-time = "2026-07-24T19:49:50.922Z" },
+    { url = "https://files.pythonhosted.org/packages/0b/3d/c494bd9e10c7272ef4f33c220e0648372a8d5c718166c333ef024496b55e/chrome_bridge_sdk-0.4.1-py3-none-any.whl", hash = "sha256:8c4a813524642793614a298a5520ad09cd29dec90e83986d712a9f0dc1869bc2", size = 11099, upload-time = "2026-09-05T06:05:41.21Z" },
 ]
 
 [[package]]
@@ -2948,7 +2948,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "ptyprocess" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [

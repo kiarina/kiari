@@ -92,6 +92,7 @@ def _register_tools() -> None:
         "presets",
         {
             **settings_manager.settings.presets,
+            "history_compact": "kiari.impl.tool_impl.history_compact:HistoryCompact",
             "subprocess": "kiari.impl.tool_impl.subprocess:Subprocess",
             "change_directory": "kiari.impl.tool_impl.change_directory:ChangeDirectory",
             "chrome": "kiari.impl.tool_impl.chrome:Chrome",
@@ -102,6 +103,7 @@ def _register_tools() -> None:
             "pdf_file_view": "kiari.impl.tool_impl.pdf_file_view:PdfFileView",
             "text_file_view": "kiari.impl.tool_impl.text_file_view:TextFileView",
             "text_file_edit": "kiari.impl.tool_impl.text_file_edit:TextFileEdit",
+            "text_file_purge": "kiari.impl.tool_impl.text_file_purge:TextFilePurge",
             "video_predict": "kiari.impl.tool_impl.video_predict:VideoPredict",
             "video_file_view": "kiari.impl.tool_impl.video_file_view:VideoFileView",
             "web": "kiari.impl.tool_impl.web:Web",

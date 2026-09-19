@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added the `history_compact` tool to replace prior events with a compact context,
+  narrative, and referenced-file-path checkpoint while preserving the current tool
+  call/result pair.
+- Added the `text_file_purge` tool to remove multiple text `FileInfo` values from
+  History by ID without deleting underlying assets or caches.
 - Exposed `run_watch` as the public API of `kiari.cli.watch` (moved from `_operations/`
   to `_helpers/`) so embedding runtimes can import it without touching private paths.
 - Added optional `stop_event` injection to `run_watch` so an embedding runtime can stop

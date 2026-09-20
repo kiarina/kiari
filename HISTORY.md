@@ -13,7 +13,7 @@
   `uv.lock` から再 sync され、git HEAD の kiarina が入り直していた（ローカルで 29 packages の
   入れ替わりを確認）。job 全体に `UV_NO_SOURCES=1` を設定して修正した
 - 修正後の構成（PyPI の kiarina 2.32.0）で `UV_NO_SOURCES=1 mise run ci` が通ることを確認した
-  （559 passed / 9 skipped、coverage 90%）。作業 PC: MacBook Pro M1 Max
+  （559 passed / 9 skipped、coverage 90%）
 
 ## 2026-09-14: watch modeの公開APIと外部stop_event注入
 

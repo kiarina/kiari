@@ -15,6 +15,7 @@ classDiagram
         events: list~Event~
         file_infos: FileInfoPool
         tool_infos: list~ToolInfo~
+        memory_graph: MemoryGraph
         metadata: dict
     }
     class Event {
@@ -55,7 +56,7 @@ metadata-only reference with the same ID.
 
 | Type | Responsibility |
 | --- | --- |
-| `History` | Aggregate root persisted across iterations and runs; owns events, files, tools, and metadata |
+| `History` | Aggregate root persisted across iterations and runs; owns events, files, tools, working memory, and metadata |
 | `Event` | Lifecycle envelope emitted asynchronously by agents, prompts, and tools |
 | `Message` | System, human, AI, or tool role and role-specific data |
 | `Content` | One provider input block containing native payload, text, files, and cache control |

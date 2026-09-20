@@ -17,6 +17,10 @@ jobs:
         env:
             MISE_GITHUB_ATTESTATIONS: "false"
             NO_COLOR: "1"
+            # Every uv command in this job ignores [tool.uv.sources]. The sync step alone is
+            # not enough: the CI tasks run through `uv run`, which re-syncs from uv.lock and
+            # would silently reinstall kiarina from its git HEAD again.
+            UV_NO_SOURCES: "1"
 
         steps:
             - uses: actions/checkout@v7

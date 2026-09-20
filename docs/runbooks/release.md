@@ -16,10 +16,14 @@ Before releasing kiari:
 3. Confirm the released combination actually works:
 
    ```sh
-   uv sync --no-sources --all-extras --all-groups
-   mise run ci
+   UV_NO_SOURCES=1 uv sync --all-extras --all-groups
+   UV_NO_SOURCES=1 mise run ci
    uv sync --all-extras --all-groups   # restore the git HEAD environment
    ```
+
+   `UV_NO_SOURCES` has to cover the CI run as well, not just the sync: `mise run ci` runs
+   the tests through `uv run`, which re-syncs from `uv.lock` and otherwise reinstalls
+   kiarina from its git HEAD, checking the very thing the gate is meant to exclude.
 
 `release-pypi.yml` runs the same `--no-sources` check, so a floor that is still a lie fails
 the tag build before anything is published. Running it locally first just saves the round

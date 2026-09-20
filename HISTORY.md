@@ -1,5 +1,20 @@
 # HISTORY
 
+## 2026-09-20: v0.3.0 リリースと released-dependency gate の修正
+
+- kiarina を 2.32.0（git HEAD `d03fbc0`）へ上げ、`kiarina[all]` の floor を `>=2.32.0` へ
+  引き上げた。`timezone` rename の公開依存を確定する release gate タスクはこれで解消した
+- `docs/concepts/kiarina-python/` を lock に同期した。`History.memory_graph`（kiarina-agi-data
+  2.31.0 で `History.embeddings` を置き換え）を data model の図と逆引きへ追加し、
+  Documented Versions を kiarina 2.32.0 / agi-data 2.31.0 / agi-data-builder 2.32.0 /
+  agi-file 2.32.0 / lib-firebase-rtdb 2.30.1 へ更新した
+- **release gate が機能していなかった**。`release-pypi.yml` は `uv sync --no-sources` で
+  released kiarina を入れるが、続く `mise run ci` は `uv run` 経由でテストを実行するため
+  `uv.lock` から再 sync され、git HEAD の kiarina が入り直していた（ローカルで 29 packages の
+  入れ替わりを確認）。job 全体に `UV_NO_SOURCES=1` を設定して修正した
+- 修正後の構成（PyPI の kiarina 2.32.0）で `UV_NO_SOURCES=1 mise run ci` が通ることを確認した
+  （559 passed / 9 skipped、coverage 90%）。作業 PC: MacBook Pro M1 Max
+
 ## 2026-09-14: watch modeの公開APIと外部stop_event注入
 
 - `run_watch`を`_operations/`から`_helpers/`へ移し、`kiari.cli.watch`の公開APIとして

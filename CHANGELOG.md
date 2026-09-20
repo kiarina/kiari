@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-20
+
 ### Added
 
 - Added the `history_compact` tool to replace prior events with a compact context,
@@ -42,6 +44,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   newest released kiarina, so a tag fails rather than publishing a floor that PyPI cannot
   satisfy.
 
+- Required kiarina 2.32.0 or later, and took the released 2.32.0 as the development
+  baseline. `History` now carries a `memory_graph` (2.31.0 replaced `History.embeddings`),
+  asset caches no longer expire by default (2.32.0), and the RTDB watcher can share an
+  `RTDBMirror` (2.30.x). kiari uses none of the removed APIs directly.
+
 - Required kiarina 2.27.0 or later. `kiarina.lib.firebase` renamed `TokenData` to `Token`,
   froze it, and now derives `project_id` / `uid` / `expires_at` from the `id_token` claims,
   so a token set is constructed from the refresh token and ID token alone. The RTDB watcher
@@ -49,6 +56,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The Firebase token file path setting is now `token_file_path`
   (`KIARINA_LIB_FIREBASE_TOKEN_FILE_PATH`), renamed from `token_data_file_path`
   (`KIARINA_LIB_FIREBASE_TOKEN_DATA_FILE_PATH`).
+
+### Fixed
+
+- Made the release workflow's released-dependency gate actually hold. `release-pypi.yml`
+  synced with `--no-sources`, but `mise run ci` runs the tests through `uv run`, which
+  re-syncs from `uv.lock` and reinstalled kiarina from its git HEAD, so the gate checked
+  the very thing it was meant to exclude. The job now sets `UV_NO_SOURCES=1` for every uv
+  command.
 
 ## [0.2.0] - 2026-08-21
 

@@ -134,7 +134,5 @@ docs 参照ガイドと同じく、ファイルの追加・削除のたびにこ
 
 ### 待機中（着手すると決めたら「次に着手・進行中」へ移す）
 
-- [次回リリース前に timezone rename の公開依存を確定する](tasks/timezone-rename-release-gate.md)
-  — 次回リリース作業の前提条件。リリースを始めるときに最初に消化する
 - [merge 済み config yaml を出力するコマンドを追加する](tasks/config-merge-output-command.md)
   — 着手条件なし。設定周りを触る機会に合わせて消化してよい

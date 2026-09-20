@@ -68,6 +68,7 @@ See [Foundation](foundation.md).
 | Understand data ownership and persistence | [Data Model and History](data-model-and-history.md) |
 | Build files and apply runtime policies | [FileInfo and Data Builder](file-info-and-data-builder.md) |
 | Construct agent data | `kiarina-agi-data-builder` |
+| Hold working memory across iterations | `kiarina-agi-data` → `memory_graph` |
 | Configure chat models and text embeddings | `kiarina-agi-text` |
 | Store and cache files | `kiarina-agi-file` |
 
@@ -114,12 +115,12 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 
 | Package | Documented version |
 | --- | --- |
-| kiarina (meta) | 2.29.0 |
+| kiarina (meta) | 2.32.0 |
 | kiarina-agi-audio | 2.28.0 |
 | kiarina-agi-base | 2.28.0 |
-| kiarina-agi-data | 2.19.0 |
-| kiarina-agi-data-builder | 2.21.1 |
-| kiarina-agi-file | 2.21.3 |
+| kiarina-agi-data | 2.31.0 |
+| kiarina-agi-data-builder | 2.32.0 |
+| kiarina-agi-file | 2.32.0 |
 | kiarina-agi-flow | 2.11.0 |
 | kiarina-agi-image | 2.28.0 |
 | kiarina-agi-runner | 2.21.0 |
@@ -134,7 +135,7 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 | kiarina-lib-falkordb | 2.28.0 |
 | kiarina-lib-firebase | 2.27.0 |
 | kiarina-lib-firebase-firestore | 2.27.0 |
-| kiarina-lib-firebase-rtdb | 2.29.0 |
+| kiarina-lib-firebase-rtdb | 2.30.1 |
 | kiarina-lib-google | 2.8.0 |
 | kiarina-lib-openai | 2.3.1 |
 | kiarina-lib-redis | 2.3.1 |

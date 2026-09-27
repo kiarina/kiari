@@ -13,7 +13,7 @@ See [Tool Implementation Patterns](tool-implementation-patterns.md) and
 flowchart LR
     Agent["kiarina agent"] --> Tool["kiari chrome tool"]
     Tool --> Adapter["kiari.lib.chrome"]
-    Adapter --> SDK["chrome-bridge-sdk 0.4.x"]
+    Adapter --> SDK["chrome-bridge-sdk 0.5.x"]
     SDK --> Server["loopback server"]
     Server --> Extension["Chrome extension"]
     Extension --> Chrome["user Chrome"]
@@ -178,7 +178,7 @@ use safe filenames and account for existing artifacts before retrying.
 ## Real-Environment Integration Test
 
 Mocks cannot detect compatibility regressions among the SDK, server, and extension. Run
-the costly integration test with a compatible 0.4.x extension connected to local Chrome:
+the costly integration test with a compatible extension (0.4.1 or later for SDK 0.5.x) connected to local Chrome:
 
 ```sh
 make chrome_test

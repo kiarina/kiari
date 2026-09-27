@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Updated the Chrome tool to Chrome Bridge SDK 0.5.x, which starts and requires a
+  Chrome Bridge 0.5 server. The extension stays compatible from 0.4.1.
+
 ## [0.3.0] - 2026-09-20
 
 ### Added

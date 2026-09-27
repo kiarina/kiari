@@ -115,7 +115,7 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 
 | Package | Documented version |
 | --- | --- |
-| kiarina (meta) | 2.32.0 |
+| kiarina (meta) | 2.33.0 |
 | kiarina-agi-audio | 2.28.0 |
 | kiarina-agi-base | 2.28.0 |
 | kiarina-agi-data | 2.31.0 |
@@ -124,7 +124,7 @@ These versions correspond to the kiari `uv.lock` reviewed for this documentation
 | kiarina-agi-flow | 2.11.0 |
 | kiarina-agi-image | 2.28.0 |
 | kiarina-agi-runner | 2.21.0 |
-| kiarina-agi-text | 2.28.0 |
+| kiarina-agi-text | 2.33.0 |
 | kiarina-agi-tool | 2.22.0 |
 | kiarina-agi-video | 2.28.0 |
 | kiarina-currency | 2.3.1 |

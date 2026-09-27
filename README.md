@@ -57,7 +57,7 @@ Operate connected Chrome profiles with the built-in `chrome` tool:
 kiari -t chrome "List Chrome tabs, select example.com, and summarize its current page"
 ```
 
-The Chrome tool requires Chrome Bridge 0.4.x. Install and connect its Chrome extension;
+The Chrome tool requires Chrome Bridge 0.5.x (extension 0.4.1 or later). Install and connect its Chrome extension;
 the SDK reuses or starts the loopback server automatically. Each tool action acquires and
 releases its own exclusive Chrome Bridge session.
 

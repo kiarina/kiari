@@ -25,6 +25,10 @@ kiari 側の実装が原因か、kiapi server / 検索 provider の状態が原�
 download していない環境では kiapi のテストが実行されずに skip されるため、
 再現には先に `make download-test-settings` が必要。
 
+2026-09-28 追記: kiapi 側で 2026-09-26 に「Web search がほぼ 0 件になる状態」を直している（SearXNG の Brave が 429、
+DuckDuckGo・Startpage が CAPTCHA で、既定検索が 0〜1 件になっていた。Bing を既定で有効にした。kiapi の `HISTORY.md` 参照）。
+これが原因だった可能性が高いので、まず test settings を download した環境でテストを再実行する。
+
 ## 申し送り
 
 - 空結果は例外にならないため、テストが落ちるまで劣化に気づけない。原因確定後、

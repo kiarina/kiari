@@ -1,5 +1,14 @@
 # HISTORY
 
+## 2026-09-28: v0.4.0 リリース（Chrome Bridge SDK 0.5 対応）
+
+- 定期保守で上げた `chrome-bridge-sdk>=0.5,<0.6`（`017788d`）を利用者へ届けるためにリリースした。
+  Chrome Bridge 0.5 の server を要求するため（extension は 0.4.1 以降と互換）、0.x の破壊的変更として minor を上げた
+- kiari のコードは v0.3.0 から変わっておらず、kiarina 2.33.0 の新しい API へは依存していないので、
+  `kiarina[all]` の floor は `>=2.32.0` のまま据え置いた
+- 事前に `UV_NO_SOURCES=1` で PyPI の kiarina 2.33.0・chrome-bridge-sdk 0.5.0 を解決し、
+  `mise run ci` が通ることを確認した（559 passed / 9 skipped、coverage 90%）
+
 ## 2026-09-28: 外の条件を待つものを `waiting/` へ分ける規則にした
 
 - タスク管理の規則を変えた（agent リポジトリと共通）。`tasks/` は今すぐ着手できるものと kiarina の判断待ち、

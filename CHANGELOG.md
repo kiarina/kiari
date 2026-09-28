@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-28
+
 ### Changed
 
 - Updated the Chrome tool to Chrome Bridge SDK 0.5.x, which starts and requires a

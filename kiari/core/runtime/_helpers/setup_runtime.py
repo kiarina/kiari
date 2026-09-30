@@ -217,34 +217,14 @@ async def _load_exchange_rate(run_options: RunOptions) -> None:
 
 
 def _setup_run_context(run_options: RunOptions) -> None:
-    import secrets
-    import string
-
     from kiarina.agi.run_context import settings_manager
     from kiarina.currency import get_system_currency
     from kiarina.i18n import get_system_language
-    from kiarina.utils.app import user_directory
     from tzlocal import get_localzone
 
     settings_manager.set_cli_args("organization_id", run_options.organization_id)
     settings_manager.set_cli_args("user_id", run_options.user_id)
     settings_manager.set_cli_args("agent_id", run_options.agent_id)
-
-    if run_options.node_id is not None:
-        settings_manager.set_cli_args("node_id", run_options.node_id)
-    else:
-        path = user_directory.get_user_data_dir() / "node_id.txt"
-
-        if path.exists():
-            node_id = path.read_text().strip()
-        else:
-            node_id = secrets.choice(string.ascii_lowercase) + "".join(
-                secrets.choice(string.ascii_lowercase + string.digits) for _ in range(5)
-            )
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(node_id)
-
-        settings_manager.set_cli_args("node_id", node_id)
 
     settings_manager.set_cli_args("timezone", run_options.timezone or str(get_localzone()))
 

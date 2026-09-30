@@ -71,7 +71,7 @@ class RunOptions(BaseModel):
     organization_id: str = "default"
     user_id: str = "default"
     agent_id: str = "default"
-    node_id: str | None = None
+    runner_id: str | None = None
     language: str | None = None
     timezone: str | None = None
     currency: str | None = None

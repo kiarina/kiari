@@ -12,7 +12,7 @@ from kiarina.utils.file import MarkdownContent
 
 from kiari.core.file_info_source import resolve_file_info_specifiers
 from kiari.core.profile import ProfileName, RunOptions
-from kiari.core.runtime import create_agi_options, setup_history
+from kiari.core.runtime import create_agi_options, create_run_context, setup_history
 from kiari.lib.history_repository import HistoryRepository, history_repository_registry
 from kiari.lib.watcher import WatchEvent
 
@@ -169,7 +169,7 @@ class BaseScheduleHandler(ScheduleHandler):
         scheduled_time: datetime,
         actual_time: datetime,
     ) -> ScheduleSession:
-        run_context = RunContext()
+        run_context = create_run_context(self.run_options)
 
         history = await setup_history(self.run_options, run_context)
 

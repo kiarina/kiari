@@ -41,7 +41,6 @@ async def test_setup_runtime(tmp_path) -> None:
         github_skip_trust_verification=True,
         i18n_catalogs=[str(tmp_path)],
         config_vars=["kiari.core.github?ignore_cache=true"],
-        node_id="node-123",
     )
 
     await setup_runtime("default", run_options)

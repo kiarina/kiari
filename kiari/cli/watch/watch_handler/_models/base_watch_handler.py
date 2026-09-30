@@ -9,7 +9,7 @@ from kiarina.agi.run_context import RunContext
 
 from kiari.core.file_info_source import resolve_file_info_specifiers
 from kiari.core.profile import ProfileName, RunOptions
-from kiari.core.runtime import create_agi_options, setup_history
+from kiari.core.runtime import create_agi_options, create_run_context, setup_history
 from kiari.lib.history_repository import HistoryRepository, history_repository_registry
 from kiari.lib.watcher import WatchEvent
 
@@ -108,7 +108,7 @@ class BaseWatchHandler(WatchHandler):
         )
 
     def _create_run_context(self, watch_event: WatchEvent) -> RunContext:
-        return RunContext()
+        return create_run_context(self.run_options)
 
     async def _on_event_completed(self, session: WatchSession) -> None:
         pass

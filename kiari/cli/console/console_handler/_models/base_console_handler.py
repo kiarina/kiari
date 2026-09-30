@@ -6,7 +6,6 @@ from contextlib import asynccontextmanager
 from kiarina.agi.cost_recorder import cost_recorder_registry
 from kiarina.agi.event import Event, ToolMessageEvent
 from kiarina.agi.event_builder import build_event
-from kiarina.agi.run_context import RunContext
 from rich.console import RenderableType
 from rich.text import Text
 
@@ -17,7 +16,7 @@ from kiari.cli.console.console_renderer import (
 from kiari.core.file_info_source import resolve_file_info_specifiers
 from kiari.core.profile import ProfileName, RunOptions
 from kiari.core.rich import join_renderables
-from kiari.core.runtime import create_agi_options, setup_history
+from kiari.core.runtime import create_agi_options, create_run_context, setup_history
 from kiari.lib.history_repository import HistoryRepository, history_repository_registry
 
 from .._schemas.console_request import ConsoleRequest
@@ -123,7 +122,7 @@ class BaseConsoleHandler(ConsoleHandler):
     # --------------------------------------------------
 
     async def _create_session(self) -> ConsoleSession:
-        run_context = RunContext()
+        run_context = create_run_context(self.run_options)
 
         history = await setup_history(self.run_options, run_context)
 

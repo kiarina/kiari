@@ -94,7 +94,7 @@ def run_context(request: pytest.FixtureRequest) -> RunContext:
         organization_id="kiari",
         user_id=request.module.__name__,
         agent_id=re.sub(r"[^a-zA-Z0-9_-]", "", request.node.name),
-        node_id="pytest",
+        runner_id="pytest",
     )
 
 
@@ -105,7 +105,6 @@ def setup_run_context(run_context: RunContext) -> None:
     settings_manager.set_cli_args("organization_id", run_context.organization_id)
     settings_manager.set_cli_args("user_id", run_context.user_id)
     settings_manager.set_cli_args("agent_id", run_context.agent_id)
-    settings_manager.set_cli_args("node_id", run_context.node_id)
 
 
 @pytest.fixture

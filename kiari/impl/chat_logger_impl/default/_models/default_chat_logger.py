@@ -146,7 +146,7 @@ class DefaultChatLogger(ConsoleChatLogger):
                 f"  organization_id: {run_context.organization_id}",
                 f"          user_id: {run_context.user_id}",
                 f"         agent_id: {run_context.agent_id}",
-                f"          node_id: {run_context.node_id}",
+                f"          runner_id: {run_context.runner_id}",
                 f"         timezone: {run_context.timezone}",
                 f"         language: {run_context.language}",
                 f"         currency: {run_context.currency}",

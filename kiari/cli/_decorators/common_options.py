@@ -79,7 +79,7 @@ def common_options[**P, R](func: Callable[P, R]) -> Callable[P, R]:
     @click.option("--organization-id", type=str, help=t.organization_id_help)
     @click.option("--user-id", type=str, help=t.user_id_help)
     @click.option("--agent-id", type=str, help=t.agent_id_help)
-    @click.option("--runner-id", type=str, help=t.node_id_help)
+    @click.option("--runner-id", type=str, help=t.runner_id_help)
     @click.option("--language", type=str, help=t.language_help)
     @click.option("--timezone", type=str, help=t.timezone_help)
     @click.option("--currency", type=str, help=t.currency_help)

@@ -92,7 +92,7 @@ def test_specified(
     assert "org=" in output
     assert "user=" in output
     assert "agent=" in output
-    assert "node=" in output
+    assert "runner=" in output
     assert "tz=" in output
     assert "lang=" in output
     assert "currency=" in output

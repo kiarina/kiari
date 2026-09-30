@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed (BREAKING)
+
+- Renamed `RunOptions.node_id` to `runner_id`, following kiarina 2.34.0, which replaced
+  `RunContext.node_id` with `runner_id`. A stored `node_id` in a profile is now ignored.
+  Requires kiarina 2.34.0 or later.
+
+### Fixed
+
+- `--runner-id` now sets the runner ID of the session's run context. It was silently
+  ignored before. Without it, each session gets a new runner ID.
+
+### Removed
+
+- Removed the per-machine `node_id.txt` in the user data directory. kiari no longer
+  reads or writes it.
+
 ## [0.4.0] - 2026-09-28
 
 ### Changed

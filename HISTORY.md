@@ -1,5 +1,13 @@
 # HISTORY
 
+## 2026-09-30: v0.5.1 リリース（`stop_event` を渡されたら SIGINT に触らない）
+
+- `run_schedule` / `run_watch` は `graceful_shutdown` でプロセス全体の SIGINT のハンドラを差し替えていた。Spirits Garden の Brain が
+  1 プロセスで複数の `run_schedule` を並べて動かすと、呼び出し側のシグナルの処理を上書きし、終了の順によっては古いハンドラが残る
+- `stop_event` を渡されたときは、停止を呼び出し側が管理しているものとして、シグナルに触らないようにした（`e71cd58`）。
+  `stop_event` なしの動きは変えていない
+- 事前に `UV_NO_SOURCES=1` で PyPI の kiarina だけを使い `mise run ci` が通ることを確認した
+
 ## 2026-09-30: v0.5.0 リリース（kiarina 2.34.0 の runner_id に追随）
 
 - kiarina 2.34.0 が `RunContext.node_id` を廃止して `runner_id`（実行している主体。既定は毎回新しい ULID）を足したのに合わせ、

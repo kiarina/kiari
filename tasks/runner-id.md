@@ -2,7 +2,7 @@
 
 ## 完了条件
 
-kiarina の `RunContext.node_id` 廃止・`runner_id` 追加（kiarina-python の `tasks/replace-node-id-with-runner-id.md`）に
+kiarina の `RunContext.node_id` 廃止・`runner_id` 追加（kiarina 2.34.0 で公開済み。2026-09-30）に
 kiari と kiari-plugins を合わせ、テストが通り、リリースしていること。
 
 ## 背景
@@ -23,4 +23,5 @@ kiari と kiari-plugins を合わせ、テストが通り、リリースして�
 
 ## 申し送り
 
-- kiarina のリリースが先。kiari は依存の下限を上げてから直す
+- kiarina 2.34.0 は公開済み（kiarina-agi-base・kiarina-agi-data・kiarina-agi-runner と meta package）。依存の下限を 2.34.0 に上げてから直す
+- kiarina 2.34.0 では `get_node_id()` と設定の `node_id` が無くなり、`FileInfo.node_id` は `str | None = None`、`BaseAgent._update_file_infos` は node に関係なく全ファイルを処理する

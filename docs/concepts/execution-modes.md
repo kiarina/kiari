@@ -89,6 +89,21 @@ accumulated watcher events. Watcher input can mark a run as ASAP. `skip_if_no_ev
 skips timer runs without accumulated events. Handlers decide whether processed watcher
 events are cleared after success or failure.
 
+An application can run several schedule sessions in one process, one `run_schedule` task
+per agent. That is outside the CLI path, so the application owns what the CLI does once:
+
+- Do not call `setup_runtime` per session. It writes process-wide settings, including the
+  default identity of `RunContext()`.
+- Pass a `stop_event`. The caller then owns shutdown and signal handling.
+- Build the session's `RunContext` in the handler. `BaseScheduleHandler._create_session`
+  and `_now` use `RunContext()`, which reads the process-wide defaults; override both.
+- Register the handler and watchers once. A handler factory receives `run_options`, and a
+  watcher specifier can carry arguments (`name?key=value`), so neither needs a per-agent
+  registration.
+- Pass tools by name in `RunOptions.tools`. History setup builds `ToolInfo` from those
+  names and, when resuming, disables active tools whose names are missing. `tool_infos`
+  seeds a new history only.
+
 ## Extension Commands
 
 `kiari ext` uses the same profile and runtime bootstrap but does not run the agent loop.

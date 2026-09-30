@@ -76,6 +76,9 @@ affect the current run.
 `WorkflowOptions`, `PromptOptions`, and `ChatOptions`. Explicit system messages create
 a structured prompt and cannot be combined with an explicit prompt.
 
+`create_run_context()` builds the session's `RunContext`. It passes `runner_id` when
+the run specifies one; otherwise kiarina generates a new runner ID for each session.
+
 Handlers add history, context, recorder, and mode state. Session
 `as_run_agent_kwargs()` methods form the adapter to `run_agent()`.
 

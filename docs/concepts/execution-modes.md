@@ -139,7 +139,8 @@ to the kiarina agent template methods, not to mode handlers.
 - Schedule request failures do not stop the long-lived session.
 - Streamlit displays request failures while preserving other agents and future requests.
 - Session cleanup and cost flushing run in `finally`.
-- Long-lived modes observe graceful-shutdown stop events.
+- Long-lived modes observe graceful-shutdown stop events. They handle SIGINT themselves only
+  when no external `stop_event` is given; a caller that passes one owns shutdown and signals.
 - Process-level subprocesses are cleaned up by finalizers.
 - Each Chrome action releases its lease; kiari does not stop the managed server or Chrome.
 

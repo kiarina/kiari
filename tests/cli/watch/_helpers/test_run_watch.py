@@ -104,6 +104,7 @@ async def test_graceful_shutdown() -> None:
 
 async def test_external_stop_event() -> None:
     stop_event = asyncio.Event()
+    previous_sigint_handler = signal.getsignal(signal.SIGINT)
 
     task = asyncio.create_task(
         run_watch(
@@ -120,6 +121,9 @@ async def test_external_stop_event() -> None:
     )
 
     await asyncio.sleep(0.2)
+
+    # The caller owns shutdown, so the process-wide SIGINT handler is left alone.
+    assert signal.getsignal(signal.SIGINT) is previous_sigint_handler
 
     stop_event.set()
 

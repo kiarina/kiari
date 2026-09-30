@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- `run_schedule` and `run_watch` no longer replace the process-wide SIGINT handler when the
+  caller passes a `stop_event`. The caller owns shutdown in that case, so several loops can
+  run in one process without overriding its signal handling. Without a `stop_event`, SIGINT
+  is handled as before.
+
 ## [0.5.0] - 2026-09-30
 
 ### Changed (BREAKING)

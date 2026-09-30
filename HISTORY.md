@@ -1,5 +1,17 @@
 # HISTORY
 
+## 2026-09-30: v0.5.0 リリース（kiarina 2.34.0 の runner_id に追随）
+
+- kiarina 2.34.0 が `RunContext.node_id` を廃止して `runner_id`（実行している主体。既定は毎回新しい ULID）を足したのに合わせ、
+  `RunOptions.node_id` を `runner_id` にした（`6ea5b95`）。`kiarina[all]` の floor を `>=2.34.0` に上げた
+- ファイルの判定は kiarina 側で node の比較をやめたため、runner_id をマシンごとに固定する理由がなくなった。
+  `user_data_dir/node_id.txt` の読み書きを消した
+- `--runner-id` は `RunOptions` に対応する項目が無く、これまで黙って捨てられていた。`create_run_context(run_options)` を足し、
+  batch・console・watch・schedule の基底 handler で session の RunContext に渡すようにした。Slack・fastapi・streamlit は
+  利用者ごとに RunContext を組み立てるので既定の ULID のまま
+- 事前に `UV_NO_SOURCES=1` で PyPI の kiarina 2.34.0 を解決し、`mise run ci` が通ることを確認した（561 passed / 9 skipped）
+- kiari-plugins の `text_embedding` も `runner_id` に直し、依存の下限を kiari>=0.5.0・kiarina>=2.34.0 に上げた（kiari-plugins `ee82cd3`）
+
 ## 2026-09-28: v0.4.0 リリース（Chrome Bridge SDK 0.5 対応）
 
 - 定期保守で上げた `chrome-bridge-sdk>=0.5,<0.6`（`017788d`）を利用者へ届けるためにリリースした。

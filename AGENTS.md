@@ -149,8 +149,6 @@ docs 参照ガイドと同じく、ファイルの追加・削除のたびにこ
 
 - [kiapi の Web 検索が空結果になる原因を確認する](tasks/kiapi-web-search-empty-result.md)
   — 通常テストが 1 件失敗したままになっている
-- [node_id を runner_id に置き換える kiarina の変更に合わせる](tasks/runner-id.md)
-  — kiarina 2.34.0 は公開済み。kiari-plugins も含む
 
 ### 後回し（着手の時期を決めるだけ。着手すると決めたら「次に着手・進行中」へ移す）
 

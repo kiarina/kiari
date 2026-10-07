@@ -149,6 +149,8 @@ docs 参照ガイドと同じく、ファイルの追加・削除のたびにこ
 
 - [kiapi の Web 検索が空結果になる原因を確認する](tasks/kiapi-web-search-empty-result.md)
   — 通常テストが 1 件失敗したままになっている
+- [kiarina-agi-runner と kiarina-agi-base の文書を lock の版に同期する](tasks/kiarina-docs-sync-runner-base.md)
+  — Documented Versions が 2.21.0・2.28.0 のまま（lock は 2.34.0）
 
 ### 後回し（着手の時期を決めるだけ。着手すると決めたら「次に着手・進行中」へ移す）
 

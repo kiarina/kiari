@@ -91,6 +91,10 @@ events.
 - `AIMessageChunk`: streaming intermediate content and optional tool-call chunks
 - `ToolMessage`: result linked to a tool call by `tool_call_id`
 
+Every message has `metadata`, a free dict that is never sent to a model. Chat providers
+keep their state on AI messages under the `chat_provider` key, which display code should
+skip.
+
 A tool call contains `id`, `name`, and `args`. `get_pending_tool_calls()` scans the
 end of a conversation for calls without corresponding tool messages.
 
@@ -98,7 +102,7 @@ end of a conversation for calls without corresponding tool messages.
 
 - `contents`: result sent to the next LLM call
 - `artifact`: structured provider or application result
-- `metadata`: execution metadata
+- `metadata`: execution metadata (on every message; shown for tool messages)
 - `display_contents`: user-facing output not sent through the standard provider path
 - `failed`: provider error status
 - `return_direct`: whether the agent loop stops after the tool result

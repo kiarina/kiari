@@ -66,10 +66,15 @@ repositories used for attachments and generated artifacts.
 | Module | Responsibility |
 | --- | --- |
 | `kiarina.agi.chat_model`, `chat_provider` | Chat model and provider contracts, including `ChatOptions` |
-| `kiarina.agi.chat_provider_impl` | Providers that call the vendor SDKs directly: `openai`, `anthropic`, `anthropic_vertex`, `google_genai`, and `mock` |
+| `kiarina.agi.chat_provider_impl` | Providers named after what they call: `openai`, `anthropic`, `anthropic_vertex`, and `google` call the vendor SDKs directly; `codex` and `claude_code` run Codex and Claude Code with the local subscription logins; `mock` |
 | `kiarina.agi.chat_content` | Converts message contents and files into provider content parts |
 | `kiarina.agi.chat_logger` | Chat logging contract; kiari implementations are under `kiari/impl/chat_logger_impl/` |
 | `kiarina.agi.text_embedding_model`, `text_embedding_provider` | Text embedding abstractions |
+
+A provider can keep state on the `AIMessage` it returns (`ChatProviderState` in
+`metadata["chat_provider"]`): `codex` keeps its thread, and `anthropic`, `openai`, and
+`google` keep reasoning to send back. It is used only while the history up to that
+message is unchanged, so kiari's history edits are safe; kiari saves it with the history.
 
 Provider cost records may distinguish tiered pricing and prompt-cache write costs. Cost
 loggers and recorders must preserve the provider's full cost breakdown rather than assume

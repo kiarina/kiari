@@ -13,6 +13,15 @@ git diff uv.lock | grep -B2 '^[-+]version' | grep -A2 'kiarina'
 Because kiarina-python changes frequently, an upgrade commit must either complete this
 playbook or record the outstanding sync as a file under `tasks/`.
 
+To upgrade only kiarina, pass every `kiarina-*` package. They are all locked to the same
+commit of kiarina-python `main`, so upgrading some of them leaves the lock unchanged:
+
+```sh
+uv lock $(awk '/^\[\[package\]\]/{p=1} p&&/^name = /{n=$3; gsub(/"/,"",n); if(n ~ /^kiarina/) print "-P " n; p=0}' uv.lock | sort -u)
+```
+
+Run it in bash; zsh does not split the command substitution into arguments.
+
 ## 1. Detect Version Drift
 
 Read the locked versions:

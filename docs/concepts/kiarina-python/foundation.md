@@ -66,7 +66,8 @@ repositories used for attachments and generated artifacts.
 | Module | Responsibility |
 | --- | --- |
 | `kiarina.agi.chat_model`, `chat_provider` | Chat model and provider contracts, including `ChatOptions` |
-| `kiarina.agi.langchain_chat_provider` | LangChain-backed Anthropic, OpenAI, Google, and other providers |
+| `kiarina.agi.chat_provider_impl` | Providers that call the vendor SDKs directly: `openai`, `anthropic`, `anthropic_vertex`, `google_genai`, and `mock` |
+| `kiarina.agi.chat_content` | Converts message contents and files into provider content parts |
 | `kiarina.agi.chat_logger` | Chat logging contract; kiari implementations are under `kiari/impl/chat_logger_impl/` |
 | `kiarina.agi.text_embedding_model`, `text_embedding_provider` | Text embedding abstractions |
 

@@ -146,7 +146,7 @@ because the newest lines are usually most useful.
 | Normalization and limits | `file_segment_normalizer/`, `file_info_adjuster/` |
 | Pre-run ordering | `kiarina-agi-runner/.../base_agent.py` |
 | Group selection | `kiarina-agi-flow/.../section_impl/file_info/` |
-| Provider conversion | `kiarina-agi-text/.../langchain_chat_provider/_operations/` |
+| Provider conversion | `kiarina-agi-text/.../chat_content/` and each `chat_provider_impl/<provider>/_operations/` |
 | kiari source expansion | `kiari/core/file_info_source/`, `kiari/core/file_resolver/` |
 
 When upgrading kiarina-python, inspect runner ordering, builder adjustment, and provider

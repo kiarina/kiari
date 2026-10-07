@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Require `kiarina[all]>=2.36.0`. Chat providers are named `google` (was `google_genai`),
+- Require `kiarina[all]>=2.36.1`, which shows the `codex-*` and `claude-code-*` chat models in model lists. Chat providers are named `google` (was `google_genai`),
   `codex`, and `claude_code`, and messages carry `metadata`, which kiari saves with the history.
 
 - Use `gpt-6.1-sol` as the example chat model in the `--chat-model` help and the profile template.

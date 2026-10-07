@@ -61,16 +61,16 @@ def test_resolve_command_admin_shortcuts() -> None:
 
 def test_resolve_command_batch_when_batch_texts_are_present() -> None:
     assert _resolve(["hello"]) == ("batch", ["hello"])
-    assert _resolve(["--chat-model", "gpt-5.4", "hello"]) == (
+    assert _resolve(["--chat-model", "gpt-6.1-sol", "hello"]) == (
         "batch",
-        ["--chat-model", "gpt-5.4", "hello"],
+        ["--chat-model", "gpt-6.1-sol", "hello"],
     )
 
 
 def test_resolve_command_console_when_batch_texts_are_missing() -> None:
-    assert _resolve(["--chat-model", "gpt-5.4"]) == (
+    assert _resolve(["--chat-model", "gpt-6.1-sol"]) == (
         "console",
-        ["--chat-model", "gpt-5.4"],
+        ["--chat-model", "gpt-6.1-sol"],
     )
 
 

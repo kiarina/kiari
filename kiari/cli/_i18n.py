@@ -97,7 +97,7 @@ class CLII18n(I18n, scope="kiari.cli"):
     # --------------------------------------------------
     chat_model_help: str = (
         "Chat model name or config string to use for model responses. Example: "
-        "'gpt-5.4' or 'gpt-5.4?key1=value1&key2=value2'."
+        "'gpt-6.1-sol' or 'gpt-6.1-sol?key1=value1&key2=value2'."
     )
     openai_help: str = "Use the default OpenAI chat model."
     anthropic_help: str = "Use the default Anthropic chat model."

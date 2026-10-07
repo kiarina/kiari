@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Use `gpt-6.1-sol` as the example chat model in the `--chat-model` help and the profile template.
+
 ## [0.5.1] - 2026-09-30
 
 ### Changed

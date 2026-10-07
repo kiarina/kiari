@@ -227,7 +227,7 @@ def _get_run_spec_template(profile_name: str) -> str:
 # For more information on the RunSpec format, see:
 # https://kiarina.github.io/kiari/
 # Example RunSpec content:
-# chat_model: gpt-5.4
+# chat_model: gpt-6.1-sol
 """
 
 
@@ -237,7 +237,7 @@ def _get_config_template(profile_name: str) -> str:
 # For more information on the config format, see:
 # https://kiarina.github.io/kiari/
 # Example config content:
-# chat_model: gpt-5.4
+# chat_model: gpt-6.1-sol
 """
 
 

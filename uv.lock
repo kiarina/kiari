@@ -890,7 +890,7 @@ wheels = [
 
 [[package]]
 name = "google-cloud-storage"
-version = "3.16.0"
+version = "3.17.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -900,9 +900,9 @@ dependencies = [
     { name = "google-resumable-media" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ae/54/d487cd2bcf2c94befce79baa677c54fa863f88c221e5481a4066ab08c33e/google_cloud_storage-3.16.0.tar.gz", hash = "sha256:3f75cf8ad345d68ef33f0c69db8a8b3f34f160b1524e75d73890602b7b8a4d6e", size = 17351062, upload-time = "2026-10-01T18:18:20.765Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/55/e1/7460613a818ed8d38ee888e672ddb89966f8f92f751ba127c1bf57f4bec2/google_cloud_storage-3.17.0.tar.gz", hash = "sha256:4373aa6328e070c31c97aa236f1600a239dfd3c85e5870cdf3dc2a928dfe0bca", size = 17355535, upload-time = "2026-10-08T18:12:54.643Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/47/bf/1a0f5f7fc1d4af8b95fc1da72d3cfe84ac709ef4dcabfd2182ef9cfe3a7a/google_cloud_storage-3.16.0-py3-none-any.whl", hash = "sha256:59e54ff1f7f8a7253c01f593f79d253728c122a8901b83f68fe7464a4131539f", size = 343457, upload-time = "2026-10-01T18:12:33.141Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/21/c6869b66d723d93d4e63fba0dc4b539debeaf03e8b9af53de906a9910ec7/google_cloud_storage-3.17.0-py3-none-any.whl", hash = "sha256:0b89283fccf84745bae75bbefdbda8393e5323471071a2ba24ab437407141171", size = 345704, upload-time = "2026-10-08T18:12:26.717Z" },
 ]
 
 [[package]]
@@ -1059,8 +1059,8 @@ name = "httpcore2"
 version = "2.13.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "h11", marker = "sys_platform != 'emscripten'" },
-    { name = "truststore", marker = "sys_platform != 'emscripten'" },
+    { name = "h11" },
+    { name = "truststore" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/f3/1db7aa2bc2524062192bb0e0323969492d1883152a232fe36eea65f4e35c/httpcore2-2.13.1.tar.gz", hash = "sha256:e0aa977abe17e69a3b820a24542a6fa88702676d83880b8d194dcd18408e5103", size = 68071, upload-time = "2026-09-23T07:47:22.372Z" }
 wheels = [
@@ -2779,7 +2779,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "ptyprocess" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [
@@ -3225,7 +3225,7 @@ name = "pyobjc-framework-cocoa"
 version = "12.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyobjc-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pyobjc-core" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/75/76/49c6da2c6a831020b4854ba20079d5a1030474bffc776b7b73c2eeff8c15/pyobjc_framework_cocoa-12.2.2.tar.gz", hash = "sha256:c96c0ef69a71afbbb0e6a7d594b455c5fe47d62e0db376ee7a2b4b828c16ace9", size = 3132831, upload-time = "2026-08-11T19:44:02.288Z" }
 wheels = [
@@ -3239,8 +3239,8 @@ name = "pyobjc-framework-quartz"
 version = "12.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyobjc-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "pyobjc-framework-cocoa", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pyobjc-core" },
+    { name = "pyobjc-framework-cocoa" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/35/b1/426a37c7ae37280b3ffca2571fb48f211946aee2f4ca31a603ed1943c4a7/pyobjc_framework_quartz-12.2.2.tar.gz", hash = "sha256:810f97b210cfd93704d240860286dfd6df09f9f1c52525fc5c2166723aea3f9e", size = 3218295, upload-time = "2026-08-11T19:45:15.189Z" }
 wheels = [

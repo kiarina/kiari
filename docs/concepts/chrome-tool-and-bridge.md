@@ -109,7 +109,8 @@ observe current state before repeating a mutation.
 ## Snapshots and Strict Refs
 
 A ref belongs to one browser, tab, and document, and lasts as long as its element: it
-stays usable across newer snapshots, other operations, and selecting another tab and back.
+stays usable across newer snapshots and other operations, and with extension 0.6.0 or later
+also across selecting another tab and back.
 It is refused while its tab is not the target, and becomes stale when its tab navigates, a
 browser dialog opens there, or its element leaves the page or changes role or name.
 
@@ -180,7 +181,7 @@ use safe filenames and account for existing artifacts before retrying.
 ## Real-Environment Integration Test
 
 Mocks cannot detect compatibility regressions among the SDK, server, and extension. Run
-the costly integration test with a compatible extension (0.6.0 or later for SDK 0.6.x) connected to local Chrome:
+the costly integration test with a compatible extension (0.5.0 or later for SDK 0.6.x) connected to local Chrome:
 
 ```sh
 make chrome_test

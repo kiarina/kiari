@@ -147,8 +147,6 @@ docs 参照ガイドと同じく、ファイルの追加・削除のたびにこ
 
 ### 次に着手・進行中
 
-- [chrome-bridge-sdk 0.6 に上げる](tasks/chrome-bridge-sdk-0-6.md)
-  — 0.6 系のサーバーが 8765 で動いていると chrome の道具が失敗する（2026-10-15 に chrome-bridge 0.6.0 を公開）
 - [kiapi の Web 検索が空結果になる原因を確認する](tasks/kiapi-web-search-empty-result.md)
   — 通常テストが 1 件失敗したままになっている
 - [kiarina-agi-runner と kiarina-agi-base の文書を lock の版に同期する](tasks/kiarina-docs-sync-runner-base.md)

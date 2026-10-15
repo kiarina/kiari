@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-15
+
 ### Changed
+
+- Require `chrome-bridge-sdk>=0.6,<0.7` (Chrome Bridge 0.6, extension 0.6.0 or later), so the
+  `chrome` tool works with a running 0.6 server. Element refs now last across snapshots,
+  operations, and switching tabs, until the tab's document changes.
 
 - Require `kiarina[all]>=2.36.1`, which shows the `codex-*` and `claude-code-*` chat models in model lists. Chat providers are named `google` (was `google_genai`),
   `codex`, and `claude_code`, and messages carry `metadata`, which kiari saves with the history.

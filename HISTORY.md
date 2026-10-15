@@ -1,5 +1,13 @@
 # HISTORY
 
+## 2026-10-15: v0.6.0 リリース（chrome-bridge-sdk 0.6 に追随）
+
+- 作業 PC: MacBook Pro M1 Max
+- chrome-bridge 0.6.0（拡張機能 0.6.0: タブを切り替えて戻っても ref を保つ）の公開で、SDK 0.5 の kiari は 8765 で動く 0.6 系のサーバーと組めなくなった
+  （SDK がサーバーの minor の一致を確かめる）。制約を `chrome-bridge-sdk>=0.6,<0.7` に上げ、README と `docs/concepts/chrome-tool-and-bridge.md` の版と ref の寿命を直した
+- 確かめたこと: `mise run ci`、`UV_NO_SOURCES=1` の `mise run ci`、`make chrome_test`（普段の Chrome。拡張機能は 0.5.0、kiari が起こした 0.6.0 のサーバー。6 件通過）
+- Unreleased にあった kiarina 2.36.1 への追随（chat provider の改名など）も同じ版に入れた。`tasks/chrome-bridge-sdk-0-6.md` を閉じた
+
 ## 2026-09-30: v0.5.1 リリース（`stop_event` を渡されたら SIGINT に触らない）
 
 - `run_schedule` / `run_watch` は `graceful_shutdown` でプロセス全体の SIGINT のハンドラを差し替えていた。Spirits Garden の Brain が

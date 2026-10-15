@@ -13,5 +13,6 @@ kiari は自分の環境の 0.5 系を managed で起こすので動く。Spirit
 ## やること
 
 - [ ] `pyproject.toml` の制約を `chrome-bridge-sdk>=0.6,<0.7` にし、lock を更新してテストを通す
+- [ ] `README.md`（「Chrome Bridge 0.5.x (extension 0.4.1 or later)」）と `docs/concepts/chrome-tool-and-bridge.md`（図の `chrome-bridge-sdk 0.5.x`、ref の寿命）を 0.6 に合わせる
 - [ ] 0.6 系のサーバーを動かした状態で、chrome の道具を 1 回通す
 - [ ] リリース（PyPI）と `uv tool` の更新。公開はオーナーの承認を得てから

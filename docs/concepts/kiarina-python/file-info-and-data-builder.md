@@ -134,6 +134,18 @@ kiari -a '{"uri_or_file_path":"app.log","keep_from_end":true,"unique_key":"app-l
 Tool-produced files follow the same rules. Subprocess output uses `keep_from_end=True`
 because the newest lines are usually most useful.
 
+## Temporary Resizing versus Stored Files
+
+With the current locked resize implementation, a non-inline tool FileInfo is dehydrated
+into the History pool and hydrated into the latest applicable message by `HistorySection`.
+The section can shrink that presentation without modifying the stored source. File viewers
+retain the requested range; subprocess output prefers the tail with `keep_from_end=True`.
+
+`pinned=True` protects a file from Agent pre-run limit adjustment; it does not disable
+Prompt-section resizing. `inline=True` bypasses the pool and therefore is not a substitute
+for resizable file content in the standard HistorySection. See the
+[resize contract](workflow-and-prompt.md#resize-contract) for the `_resize` hook and limits.
+
 ## Canonical Sources
 
 | Concern | Source |

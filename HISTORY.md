@@ -1,5 +1,12 @@
 # HISTORY
 
+## 2026-11-03: Sectionのresize修正をgit依存へ取り込む
+
+- kiarina-pythonのgit参照を`5b3ebab1`から`4aed3a00`へ更新した。同一リポジトリに由来するkiarina群29件のpinだけを更新し、それ以外のpackageのversion/sourceは不変であることを確認した。
+- BaseSectionの`resize`共通入口と`_resize`拡張契約、provider補正を保ったlimits非累積、固定部分の容量エラー、一時resizeとAgentのpool更新の違いを既存の技術文書へ反映した。kiari側に独自Sectionはなく、製品ソースの変更は不要だった。
+- kiariのtext_file_view/subprocess/runtime既存テスト32件成功（1.22秒）。kiariの更新済み環境で基盤の標準Prompt/SectionContainer回帰22件成功（0.91秒）。Ruff/format・mypyを確認した。実LLM/外部サービスを使うテストは実行していない。
+- 公開済みバージョン番号は変更していない。新しい挙動はgit pinの実装に基づくため、PyPIだけでの提供を確認したことにはしない。既存のrunner/base文書同期タスクは別件として残す。
+
 ## 2026-10-15: v0.6.0 リリース（chrome-bridge-sdk 0.6 に追随）
 
 - 作業 PC: MacBook Pro M1 Max

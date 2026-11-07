@@ -49,8 +49,3 @@ Implementations live under `pre_hook_impl/` and `post_hook_impl/`.
 
 This module defines the tool logging abstraction. kiari implementations live under
 `kiari/impl/tool_logger_impl/`.
-
-## kiarina.agi.langchain_tool
-
-`LangChainTool` adapts a LangChain tool to the kiarina tool contract. Tests live under
-`packages/kiarina-agi-tool/tests/langchain_tool/`.

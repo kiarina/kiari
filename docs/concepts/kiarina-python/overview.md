@@ -54,7 +54,6 @@ See [Tools](tools.md).
 | Define, register, and run tools | `kiarina-agi-tool` → `kiarina.agi.tool` |
 | Run pre- and post-tool hooks | `kiarina-agi-tool` → `pre_hook`, `post_hook` |
 | Log tool execution | `kiarina-agi-tool` → `tool_logger` |
-| Adapt LangChain tools | `kiarina-agi-tool` → `langchain_tool` |
 
 ### Foundation and Data
 

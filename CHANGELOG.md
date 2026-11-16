@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Allow Pillow 13 (`pillow>=11.3.0,<14`).
+- Allow croniter 7 (`croniter>=6.0.0,<8`).
 
 ## [0.6.0] - 2026-10-15
 

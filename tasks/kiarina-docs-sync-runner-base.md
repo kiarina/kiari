@@ -39,3 +39,21 @@ kiarina を `4aed3a00`（2.36.1）から `17d89da8`（2.41.0）へ上げた。�
 
 2.37.0〜2.41.0 の破壊的変更（`FileInfo.asset_hash`、`opencv-python`・`google-api-python-client`・`langchain` を既定の依存から外した）は
 kiarina-python の root の `CHANGELOG.md` にある。`langchain_tool` の削除は `f462ca4` で文書から消し済み。
+
+## 2026-11-16 の追記（依存の定期保守）
+
+kiarina を `1c115c35`（2.43.0）へ上げた。文書は直していない。上の表から lock の版が変わったのは次の通り
+（`mise run ci` は 561 passed / 9 skipped）。
+
+| パッケージ | lock の版 |
+| --- | --- |
+| kiarina (meta) | 2.43.0 |
+| kiarina-agi-audio | 2.42.0 |
+| kiarina-agi-data-builder | 2.42.0 |
+| kiarina-agi-image | 2.42.0 |
+| kiarina-agi-text | 2.43.0 |
+| kiarina-agi-video | 2.42.0 |
+| kiarina-lib-google | 2.42.0 |
+
+2.42.0 の anthropic 2（`temperature` の削除）・google-genai 3（`GoogleSettings.gemini_api_version`）と、2.43.0 の
+`ChatProviderContext.cost_record` は kiarina-python の root の `CHANGELOG.md` にある。
